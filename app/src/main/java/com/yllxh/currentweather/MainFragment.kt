@@ -7,13 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import com.yllxh.currentweather.databinding.FragmentMainBinding
 import com.yllxh.currentweather.utils.NetworkAlerter
 import com.yllxh.currentweather.utils.NetworkState
+import com.yllxh.currentweather.utils.toast
 
 
-class MainFragment : Fragment(), NetworkAlerter.NetworkStateListener {
+class MainFragment : Fragment() {
 
-    private val viewModel  by lazy {
+    private lateinit var binding : FragmentMainBinding
+    private val viewModel by lazy {
         ViewModelProviders.of(this).get(MainViewModel::class.java)
     }
 
@@ -21,21 +25,31 @@ class MainFragment : Fragment(), NetworkAlerter.NetworkStateListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        NetworkAlerter.setListener(this, requireContext())
 
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        binding = FragmentMainBinding.inflate(inflater, container, false)
+
+        NetworkAlerter.setListener(viewModel, requireContext(), lifecycle)
+
+        viewModel.isConnected.observe(this, Observer {
+            it?.let { onNetworkStateChanged(it) }
+        })
+
+        viewModel.todaysReport.observe(this, Observer {
+            it?.let {
+                binding.report = it
+                toast("dataFetched")
+            }
+        })
+
+        return binding.root
     }
 
-    override fun onNetworkStateChanged(state: NetworkState) {
-        val ms = when (state) {
-            NetworkState.AVAILABLE -> "Connected"
-            else -> "Lost Connection"
+    private fun onNetworkStateChanged(isConnected: Boolean) {
+        val ms = when {
+            isConnected -> "Connected"
+            else -> "Internet connection lost."
         }
-        toast(ms)
     }
 
 }
 
-fun Fragment.toast(ms: String, length: Int = Toast.LENGTH_SHORT){
-    Toast.makeText(requireContext(), ms, length).show()
-}

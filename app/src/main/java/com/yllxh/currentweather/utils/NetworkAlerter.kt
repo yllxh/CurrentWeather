@@ -62,8 +62,8 @@ class NetworkAlerter private constructor(
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
     companion object {
-        fun <T>setListener(listener: T, context: Context) where T: LifecycleOwner, T: NetworkStateListener{
-            NetworkAlerter(listener, context, listener.lifecycle)
+        fun setListener(listener: NetworkStateListener, context: Context, lifecycle: Lifecycle) {
+            NetworkAlerter(listener, context, lifecycle)
         }
     }
 

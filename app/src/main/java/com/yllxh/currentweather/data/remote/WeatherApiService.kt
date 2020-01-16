@@ -25,31 +25,31 @@ interface WeatherApiService {
     @GET("data/2.5/weather")
     fun getWeatherForCityAsync(@Query("q") cityName: String,
                                @Query("units") unitType: String? = DEFAULT_UNIT_TYPE,
-                               @Query("appid") api:String = WEATHER_API_KEY,
-                               @Query("lang") lang: String? = DEFAULT_LANGUAGE
+                               @Query("lang") lang: String? = DEFAULT_LANGUAGE,
+                               @Query("appid") api:String = WEATHER_API_KEY
     ) : Deferred<TodaysReport>
 
     @GET("data/2.5/weather")
     fun getReportFromLocationAsync(@Query("lat") latitude: Double,
                                    @Query("lon") longitude: Double,
                                    @Query("units") unitType: String? = DEFAULT_UNIT_TYPE,
-                                   @Query("appid") api:String = WEATHER_API_KEY,
-                                   @Query("lang") lang: String? = DEFAULT_LANGUAGE
+                                   @Query("lang") lang: String? = DEFAULT_LANGUAGE,
+                                   @Query("appid") api:String = WEATHER_API_KEY
     ): Deferred<TodaysReport>
 
     @GET("data/2.5/forecast")
     fun getForecastForCityAsync(@Query("q") cityName: String,
                                 @Query("units") unitType: String? = DEFAULT_UNIT_TYPE,
-                                @Query("appid") api:String = WEATHER_API_KEY,
-                                @Query("lang") lang: String? = DEFAULT_LANGUAGE
+                                @Query("lang") lang: String? = DEFAULT_LANGUAGE,
+                                @Query("appid") api:String = WEATHER_API_KEY
     ): Deferred<WeekReport>
-
+//    api.openweathermap.org/data/2.5/forecast
     @GET("data/2.5/forecast")
     fun getForecastFromLocationAsync(@Query("lat") latitude: Double,
                                      @Query("lon") longitude: Double,
-                                     @Query("units") unitType: String? = "Metric",
-                                     @Query("appid") api:String = WEATHER_API_KEY,
-                                     @Query("lang") lang: String? = DEFAULT_LANGUAGE
+                                     @Query("units") unitType: String? = DEFAULT_UNIT_TYPE,
+                                     @Query("lang") lang: String? = DEFAULT_LANGUAGE,
+                                     @Query("appid") api:String = WEATHER_API_KEY
     ): Deferred<WeekReport>
 
 }
