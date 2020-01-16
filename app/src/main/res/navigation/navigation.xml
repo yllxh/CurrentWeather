@@ -9,5 +9,5 @@
         android:id="@+id/mainFragment"
         android:name="com.yllxh.currentweather.MainFragment"
         android:label="main_fragment"
-        tools:layout="@layout/main_fragment" />
+        tools:layout="@layout/fragment_main" />
 </navigation>
