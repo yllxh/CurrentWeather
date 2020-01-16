@@ -76,12 +76,12 @@ class MainViewModel(app: Application) : AndroidViewModel(app), NetworkAlerter.Ne
         }
     }
 
-    fun onLocationRequestDenied() {
+    fun onLocationPermissionDenied() {
         _isLocationRequested.value = false
-        _searchState.value = SearchState.FAILED
+        _searchState.failed()
     }
 
-    fun onLocationRequestApproved() {
+    fun onLocationPermissionApproved() {
         _isLocationRequested.value = true
     }
 

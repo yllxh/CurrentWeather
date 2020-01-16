@@ -43,6 +43,7 @@ class MainFragment : Fragment() {
             wasRequested?.let {
                 if (!wasRequested)
                     return@let
+
                 if (hasLocationPermission){
                     requestCurrentLocation()
                 } else {
@@ -53,6 +54,12 @@ class MainFragment : Fragment() {
         })
 
         return binding.root
+    }
+
+    private fun requestCurrentLocation() {
+        LocationRetriever(requireContext()) {
+            viewModel.onLocationRetrieved(it)
+        }
     }
 
     private fun requestLocationPermission() =
@@ -68,17 +75,11 @@ class MainFragment : Fragment() {
         when (requestCode) {
             LOCATION_PERMISSION_REQUEST -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    viewModel.onLocationRequestApproved()
+                    viewModel.onLocationPermissionApproved()
                 } else {
-                    viewModel.onLocationRequestDenied()
+                    viewModel.onLocationPermissionDenied()
                 }
             }
-        }
-    }
-
-    private fun requestCurrentLocation() {
-        LocationRetriever(requireContext()) {
-            viewModel.onLocationRetrieved(it)
         }
     }
 
