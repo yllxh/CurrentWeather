@@ -2,19 +2,60 @@ package com.yllxh.currentweather.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.annotation.IntegerRes
 import androidx.preference.PreferenceManager
 import com.yllxh.currentweather.data.LatLng
 import java.util.*
 
 const val CITY_NOT_SET = "not_set"
 
-private val INVALID_COORDINATE = Double.NEGATIVE_INFINITY.toString()
+private const val INVALID_COORDINATE = Int.MAX_VALUE.toDouble().toString()
 
 private const val UNIT_TYPE_KEY = "unit_type_key"
 private const val CITY_NAME_KEY = "city_name_key"
 private const val APP_LANGUAGE_KEY = "app_language_key"
 private const val LOCATION_LAT_KEY = "location_lat_key"
 private const val LOCATION_LNG_KEY = "location_lon_key"
+
+
+fun getLastSavedLocation(context: Context): LatLng {
+    val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+
+    val lat = getCoordinate(LOCATION_LAT_KEY, preferences)
+    val lng = getCoordinate(LOCATION_LNG_KEY, preferences)
+
+    return LatLng(lat, lng)
+
+}
+
+private fun getCoordinate(key: String, preferences: SharedPreferences): Double {
+    return if (preferences.contains(key)) {
+        preferences.getString(key, INVALID_COORDINATE) ?: INVALID_COORDINATE
+    } else {
+        setCoordinate(key, INVALID_COORDINATE, preferences)
+        INVALID_COORDINATE
+    }.toDouble()
+}
+
+private fun setCoordinate(key: String, value: String, preferences: SharedPreferences) {
+    preferences.apply {
+        edit().apply {
+            putString(key, value)
+            apply()
+        }
+    }
+}
+
+fun setLastLocation(context: Context, latLng: LatLng) {
+    PreferenceManager.getDefaultSharedPreferences(context).apply {
+        setCoordinate(LOCATION_LAT_KEY, String.format("%.6f", latLng.lat), this)
+        setCoordinate(LOCATION_LNG_KEY, String.format("%.6f", latLng.lng), this)
+    }
+}
+
+fun isValidLocationSaved(context: Context): Boolean {
+    return getLastSavedLocation(context).isValid()
+}
 
 fun getUnitType(context: Context): String {
     val preferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -56,44 +97,7 @@ fun getCityName(context: Context): String {
         CITY_NOT_SET
     }
 }
-fun getLastSavedLocation(context: Context): LatLng {
-    val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-    val lat = getCoordinate(LOCATION_LAT_KEY, preferences)
-    val lng = getCoordinate(LOCATION_LNG_KEY, preferences)
-
-    return LatLng(lat, lng)
-
-}
-
-private fun getCoordinate(key: String, preferences: SharedPreferences): Double {
-    return if (preferences.contains(LOCATION_LAT_KEY)) {
-        preferences.getString(LOCATION_LAT_KEY, INVALID_COORDINATE) ?: INVALID_COORDINATE
-    } else {
-        setCoordinate(key, INVALID_COORDINATE, preferences)
-        INVALID_COORDINATE
-    }.toDouble()
-}
-
-private fun setCoordinate(key: String, value: String, preferences: SharedPreferences) {
-    preferences.apply {
-        edit().apply {
-            putString(key, value)
-            apply()
-        }
-    }
-}
-
-fun setLastLocation(context: Context, latLng: LatLng) {
-    PreferenceManager.getDefaultSharedPreferences(context).apply {
-        setCoordinate(LOCATION_LAT_KEY, latLng.lat.toString(), this )
-        setCoordinate(LOCATION_LNG_KEY, latLng.lng.toString(), this )
-    }
-}
-
-fun isValidLocationSaved(context: Context): Boolean{
-    return getLastSavedLocation(context).isValid()
-}
 
 fun isCityNameSet(context: Context): Boolean {
     return getCityName(context) != CITY_NOT_SET
@@ -136,7 +140,7 @@ fun isTranslationProvidedByApi(context: Context): Boolean {
     return getSavedUILanguage(context) != ALBANIAN
 }
 
-fun updateSavedLanguage(context: Context){
+fun updateSavedLanguage(context: Context) {
     val deviceLang = Locale.getDefault().language
     if (SupportedLanguages.contains(deviceLang)) {
 
