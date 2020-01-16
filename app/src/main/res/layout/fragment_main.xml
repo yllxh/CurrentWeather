@@ -1,13 +1,231 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
+    <data>
+
+        <variable
+            name="report"
+            type="com.yllxh.currentweather.data.reports.TodaysReport" />
+
+        <variable
+            name="viewModel"
+            type="com.yllxh.currentweather.MainViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:background="@android:color/transparent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        tools:context="com.yllxh.currentweather.MainFragment">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/place_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center_horizontal"
+            android:text="@{@string/city_name(report.cityName, report.country)}"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Place Name" />
+
+        <TextView
+            android:id="@+id/date_textView"
+            report_dateOfDay="@{report}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/day_textView"
+            app:layout_constraintStart_toStartOf="@+id/day_textView"
+            app:layout_constraintTop_toBottomOf="@+id/day_textView"
+            tools:text="2 jan 2020" />
+
+        <ImageView
+            android:id="@+id/sky_imageView"
+            report_contentDescription="@{report}"
+            report_icon="@{report}"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.75"
+            app:layout_constraintStart_toEndOf="@+id/temperature_textView"
+            app:layout_constraintTop_toBottomOf="@+id/date_textView"
+            tools:srcCompat="@drawable/sun_01d"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/description_textView"
+            report_description="@{report}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/sky_imageView"
+            app:layout_constraintStart_toStartOf="@+id/sky_imageView"
+            app:layout_constraintTop_toBottomOf="@+id/sky_imageView"
+            tools:text="weather description" />
+
+        <TextView
+            android:id="@+id/temperature_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginBottom="24dp"
+            android:text="@{@string/only_temp(report.temp)}"
+            android:textSize="80sp"
+            app:layout_constraintBottom_toBottomOf="@+id/sky_imageView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/sky_imageView"
+            tools:ignore="SpUsage"
+            tools:text="18°" />
+
+        <TextView
+            android:id="@+id/day_textView"
+            report_day="@{report}"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="@+id/place_name"
+            app:layout_constraintStart_toStartOf="@+id/place_name"
+            app:layout_constraintTop_toBottomOf="@+id/place_name"
+            tools:text="Monday" />
+
+        <TextView
+            android:id="@+id/temp_max_min_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:text="@{@string/temp_min_max(report.tempMin, report.tempMax)}"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/temperature_textView"
+            tools:text="12/2" />
+
+        <TextView
+            android:id="@+id/temp_feels_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{@string/feels_temp(report.tempFeels)}"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/temp_max_min_textView"
+            app:layout_constraintTop_toBottomOf="@+id/temp_max_min_textView"
+            tools:text="feels: 4" />
+
+        <Button
+            android:id="@+id/daily_forecast_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="24dp"
+            android:background="@android:color/transparent"
+            android:text="@string/daily_forecast"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/details_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:background="@android:color/transparent"
+            android:text="@string/details"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/temp_feels_textView" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/celsius_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/celsius_symbol"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/radioButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/fahrenheit_symbol"
+                android:textSize="16sp" />
+        </RadioGroup>
+
+        <ImageButton
+            android:id="@+id/myLocationButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/my_location_button_description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_my_location"
+            tools:srcCompat="@drawable/ic_my_location" />
+
+        <ImageButton
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/search_button_description"
+            app:layout_constraintEnd_toEndOf="@+id/myLocationButton"
+            app:layout_constraintStart_toStartOf="@+id/myLocationButton"
+            app:layout_constraintTop_toBottomOf="@+id/myLocationButton"
+            app:srcCompat="@drawable/ic_search"
+            tools:srcCompat="@drawable/ic_search" />
+
+        <TextView
+            android:id="@+id/next_hours_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/next_24_hours"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/details_button" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/next_hours_recycle_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal"
+            android:clipToPadding="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/daily_forecast_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/next_hours_text_view"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

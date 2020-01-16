@@ -1,3 +1,38 @@
 <resources>
     <string name="app_name">Current Weather</string>
+
+    <string name="pressure">Pressure: %1$s hPa</string>
+    <string name="humidity">Humidity: %1$s %%</string>
+    <string name="only_temp" translatable="false">%1$.0f°</string>
+    <string name="city_name" translatable="false">%1$s, %2$s</string>
+    <string name="cloudiness">Clouds: %1$s %%</string>
+    <string name="feels_temp">Feels: %1$.0f°</string>
+    <string name="wind_degree">Wind Degree: %1$d°</string>
+    <string name="temp_min_max" translatable="false"> %1$.0f°/%2$.0f°</string>
+    <string name="celsius_symbol" translatable="false">°C</string>
+    <string name="fahrenheit_symbol" translatable="false">°F</string>
+    <string name="wind_speed_metric">Wind Speed: %1$.1f m/s</string>
+    <string name="temp_min_max_feels"> %1$.1f°/%2$.1f°\nFeels: %3$.0f°</string>
+    <string name="wind_speed_imperial">Wind Speed: %1$.1f mi/h</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="search">Search</string>
+    <string name="details">Details</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="search_failed">Search failed</string>
+    <string name="daily_forecast">Daily Forecast</string>
+    <string name="enter_city_name">Enter City Name</string>
+    <string name="location_not_found">Could not find location.</string>
+    <string name="enter_city_name_hint">e.g. berlin, istanbul</string>
+    <string name="search_button_description">Search for a place by name.</string>
+    <string name="my_location_button_description">Get weather information for your location.</string>
+    <string name="location_permission_denied_permanently">Location Permission Is PERMANENTLY denied.</string>
+    <string name="change_language" translatable="false">Change Language</string>
+
+    <string name="english" translatable="false">English</string>
+    <string name="albanian" translatable="false">Shqip</string>
+    <string name="german" translatable="false">Deutsch</string>
+    <string name="select_language">Choose a language</string>
+    <string name="ok">OK</string>
+    <string name="next_24_hours">Next 24 hours</string>
 </resources>

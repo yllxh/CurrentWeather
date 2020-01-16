@@ -1,11 +1,73 @@
 package com.yllxh.currentweather.utils
 
+import android.content.Context
+import com.yllxh.currentweather.R
 import com.yllxh.currentweather.data.reports.DayReport
 import com.yllxh.currentweather.data.reports.HourReport
-import java.text.DateFormat
-import java.util.*
-import java.util.concurrent.TimeUnit
 
+
+
+fun translateDay(context: Context, dayIndex: Int): String {
+    return context.resources.getStringArray(R.array.days)[dayIndex]
+}
+
+/**
+ * Helper function used to retrieve the resource id of a weather
+ * icon based on the provide icon code.
+ * Returns a default icon id in case the icon is not found.
+ *
+ * @param   context Required to access resources.
+ * @param   iconCode    Icon code to be searched for.
+ *
+ * @return  The icon resource id associated with the iconCode.
+ */
+fun getWeatherIconId(context: Context, iconCode: String): Int {
+    val ids = context.resources.obtainTypedArray(R.array.weather_icon_ids)
+    val names = context.resources.getStringArray(R.array.weather_icon_names)
+    var iconId = ids.getResourceId(0, R.drawable.sun_01d)
+
+    for ((index, name) in names.withIndex()) {
+        if (name.contains(iconCode)) {
+            iconId = ids.getResourceId(index, R.drawable.sun_01d)
+            ids.recycle()
+            break
+        }
+    }
+    return iconId
+}
+
+/**
+ * Function used to retrieve the index of the translated weather
+ * condition code which is associated with the provided weather id.
+ * If index is not found it returns -1.
+ *
+ * @param   context Required to access resources.
+ * @param   weatherId   The weather id to be searched for.
+ *
+ * @return  The index of the weather condition code. Returns -1 if not found.
+ */
+private fun getWeatherConditionIndexFromWeatherId(context: Context, weatherId: Int): Int {
+    val ids = context.resources.getIntArray(R.array.weather_ids)
+
+    return ids.binarySearch(weatherId)
+}
+
+/**
+ * Function used to retrieve the translation of the
+ * weather description associated with the provided weather id.
+ *
+ * @param   context Required to access resources.
+ * @param   weatherId The weather id to be searched for.
+ *
+ * @return  If found it is returns weather description, otherwise returns empty string.
+ */
+fun getDescriptionFromWeatherId(context: Context, weatherId: Int): String {
+    val descriptions = context.resources.getStringArray(R.array.weather_descriptions_sq)
+
+    val index = getWeatherConditionIndexFromWeatherId(context, weatherId)
+
+    return if(index == -1) "" else descriptions[index]
+}
 
 /**
  * Function used to calculate the average temperature form
@@ -276,32 +338,4 @@ fun fromHourlyToDayReports(hourlyReports: List<HourReport>): List<DayReport> {
         .apply {
             sortBy { it.hourlyReports[0].timeInSeconds }
         }
-}
-
-/**
- * Function used to get the index of a day based on the second
- * that are passed.
- *
- * @param   seconds Seconds that need to be converted to a day index.
- *
- * @return  Returns the index of the day that the seconds represent.
- */
-fun fromSecondsToDayIndex(seconds: Int): Int {
-    val calendar = fromSecondsToCalendar(seconds)
-
-    return when (calendar.get(Calendar.DAY_OF_WEEK)) {
-        Calendar.MONDAY -> 0
-        Calendar.TUESDAY -> 1
-        Calendar.WEDNESDAY -> 2
-        Calendar.THURSDAY -> 3
-        Calendar.FRIDAY -> 4
-        Calendar.SATURDAY -> 5
-        else -> 6
-    }
-}
-
-private fun fromSecondsToCalendar(seconds: Int): Calendar {
-    return DateFormat.getDateTimeInstance().calendar.apply {
-        timeInMillis = TimeUnit.SECONDS.toMillis(seconds.toLong())
-    }
 }

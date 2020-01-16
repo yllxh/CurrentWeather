@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="languages_codes">
+        <item>en</item>
+        <item>sq</item>
+        <item>de</item>
+    </string-array>
+
+    <integer-array name="weather_icon_ids">
+        <item>@drawable/sun_01d</item>
+        <item>@drawable/moon_01n</item>
+        <item>@drawable/cloud_and_sun_02d</item>
+        <item>@drawable/cloud_and_moon_02n</item>
+        <item>@drawable/cloud_03d</item>
+        <item>@drawable/cloud_03n</item>
+        <item>@drawable/spread_clouds_04d</item>
+        <item>@drawable/spread_clouds_04n</item>
+        <item>@drawable/rain_09d</item>
+        <item>@drawable/rain_09n</item>
+        <item>@drawable/rain_and_sun_10d</item>
+        <item>@drawable/rain_and_moon_10n</item>
+        <item>@drawable/thunder_11d</item>
+        <item>@drawable/thunder_11n</item>
+        <item>@drawable/snow_13d</item>
+        <item>@drawable/snow_13n</item>
+        <item>@drawable/mist_50d</item>
+        <item>@drawable/mist_50n</item>
+    </integer-array>
+
+
+    <string-array name="weather_icon_names">
+        <item>01d</item>
+        <item>01n</item>
+        <item>02d</item>
+        <item>02n</item>
+        <item>03d</item>
+        <item>03n</item>
+        <item>04d</item>
+        <item>04n</item>
+        <item>09d</item>
+        <item>09n</item>
+        <item>10d</item>
+        <item>10n</item>
+        <item>11d</item>
+        <item>11n</item>
+        <item>13d</item>
+        <item>13n</item>
+        <item>50d</item>
+        <item>50n</item>
+    </string-array>
+
+    <integer-array name="weather_ids">
+        <item>200</item>
+        <item>201</item>
+        <item>202</item>
+        <item>210</item>
+        <item>211</item>
+        <item>212</item>
+        <item>221</item>
+        <item>230</item>
+        <item>231</item>
+        <item>232</item>
+        <item>300</item>
+        <item>301</item>
+        <item>302</item>
+        <item>310</item>
+        <item>311</item>
+        <item>312</item>
+        <item>313</item>
+        <item>314</item>
+        <item>321</item>
+        <item>500</item>
+        <item>501</item>
+        <item>502</item>
+        <item>503</item>
+        <item>504</item>
+        <item>511</item>
+        <item>520</item>
+        <item>521</item>
+        <item>522</item>
+        <item>531</item>
+        <item>600</item>
+        <item>601</item>
+        <item>602</item>
+        <item>611</item>
+        <item>612</item>
+        <item>613</item>
+        <item>615</item>
+        <item>616</item>
+        <item>620</item>
+        <item>621</item>
+        <item>622</item>
+        <item>701</item>
+        <item>711</item>
+        <item>721</item>
+        <item>731</item>
+        <item>741</item>
+        <item>751</item>
+        <item>761</item>
+        <item>762</item>
+        <item>771</item>
+        <item>781</item>
+        <item>800</item>
+        <item>801</item>
+        <item>802</item>
+        <item>803</item>
+        <item>804</item>
+    </integer-array>
+
+
+    <string-array name="weather_descriptions_sq">
+        <item>Stuhi me shi të lehtë</item>
+        <item>Stuhi me shi</item>
+        <item>Stuhi me shi të fortë</item>
+        <item>Stuhi e lehtë</item>
+        <item>Stuhi</item>
+        <item>Stuhi e rëndë</item>
+        <item>Stuhi e rrëmbyeshme</item>
+        <item>Stuhi me riga shiu</item>
+        <item>Stuhi me riga shiu</item>
+        <item>Stuhi me riga shiu</item>
+        <item>Riga te lehta shiu</item>
+        <item>Riga</item>
+        <item>Riga te renda shiu</item>
+        <item>Shi i lehtë</item>
+        <item>Shi me riga</item>
+        <item>Shi i rend me riga</item>>
+        <item>Vende-vende riga shiu</item>
+        <item>Vende-vende riga shiu</item>
+        <item>Vende-vende riga shiu</item>
+        <item>Shi i lehtë</item>
+        <item>Shi i lehtë</item>
+        <item>Shi i rënd</item>
+        <item>Shi i rënd</item>
+        <item>Rrebesh</item>
+        <item>Shi ngrires</item>
+        <item>Vende-vende shi lehtë</item>
+        <item>Vende-vende shi</item>
+        <item>Vende-vende shi fuqishëm</item>
+        <item>Shi i rrëmbyeshme</item>
+        <item>Borë e lehtë</item>
+        <item>Borë</item>
+        <item>Borë e rëndë</item>
+        <item>Borë me shi</item>
+        <item>Vende-vende borë me shi</item>
+        <item>Vende-vende borë me shi</item>
+        <item>Shi i lehtë dhe borë</item>
+        <item>Shi dhe borë</item>
+        <item>Borë e lehtë vende-vende</item>
+        <item>Borë e rëndë vende-vende</item>
+        <item>Borë e rëndë</item>
+        <item>Mjegull</item>
+        <item>Tym</item>
+        <item>Mjegullim</item>
+        <item>Vorbullat e rërës / pluhurit</item>
+        <item>Mjegull</item>
+        <item>Rërë</item>
+        <item>Pluhur</item>
+        <item>Hi vullkanik</item>
+        <item>Reshje vullkanik</item>
+        <item>Tornado</item>
+        <item>Kthjellët</item>
+        <item>Pak re</item>
+        <item>Retë të shpërndara</item>
+        <item>Re</item>
+        <item>Re</item>
+    </string-array>
+
+
+
+    <string-array name="days">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
+
+
+    <string-array name="days_abbreviated">
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+        <item>Sat</item>
+        <item>Sun</item>
+    </string-array>
+</resources>
