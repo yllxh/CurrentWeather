@@ -1,21 +1,20 @@
 package com.yllxh.currentweather
 
+import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.yllxh.currentweather.databinding.FragmentMainBinding
-import com.yllxh.currentweather.utils.NetworkAlerter
-import com.yllxh.currentweather.utils.NetworkState
-import com.yllxh.currentweather.utils.toast
+import com.yllxh.currentweather.utils.*
 
 
 class MainFragment : Fragment() {
 
+    private val hasLocationPermission get() = hasLocationPermission(requireContext())
     private lateinit var binding : FragmentMainBinding
     private val viewModel by lazy {
         ViewModelProviders.of(this).get(MainViewModel::class.java)
@@ -37,11 +36,50 @@ class MainFragment : Fragment() {
         viewModel.todaysReport.observe(this, Observer {
             it?.let {
                 binding.report = it
-                toast("dataFetched")
+            }
+        })
+
+        viewModel.isLocationRequested.observe(this, Observer { wasRequested ->
+            wasRequested?.let {
+                if (!wasRequested)
+                    return@let
+                if (hasLocationPermission){
+                    requestCurrentLocation()
+                } else {
+                    requestLocationPermission()
+                }
+
             }
         })
 
         return binding.root
+    }
+
+    private fun requestLocationPermission() =
+        requestLocationPermission(this, LOCATION_PERMISSION_REQUEST)
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        when (requestCode) {
+            LOCATION_PERMISSION_REQUEST -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    viewModel.onLocationRequestApproved()
+                } else {
+                    viewModel.onLocationRequestDenied()
+                }
+            }
+        }
+    }
+
+    private fun requestCurrentLocation() {
+        LocationRetriever(requireContext()) {
+            viewModel.onLocationRetrieved(it)
+        }
     }
 
     private fun onNetworkStateChanged(isConnected: Boolean) {

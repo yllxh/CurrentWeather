@@ -84,10 +84,10 @@ private fun setCoordinate(key: String, value: String, preferences: SharedPrefere
     }
 }
 
-fun setLastLocation(context: Context, lat: Double, lng: Double) {
+fun setLastLocation(context: Context, latLng: LatLng) {
     PreferenceManager.getDefaultSharedPreferences(context).apply {
-        setCoordinate(LOCATION_LAT_KEY, lat.toString(), this )
-        setCoordinate(LOCATION_LNG_KEY, lng.toString(), this )
+        setCoordinate(LOCATION_LAT_KEY, latLng.lat.toString(), this )
+        setCoordinate(LOCATION_LNG_KEY, latLng.lng.toString(), this )
     }
 }
 
