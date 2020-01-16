@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import com.yllxh.currentweather.data.Repository
 import com.yllxh.currentweather.data.reports.TodaysReport
 import com.yllxh.currentweather.utils.*
-import com.yllxh.currentweather.utils.extentions.*
 import retrofit2.HttpException
 
 class MainViewModel(app: Application) : AndroidViewModel(app), NetworkAlerter.NetworkStateListener {

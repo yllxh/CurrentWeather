@@ -2,7 +2,6 @@ package com.yllxh.currentweather.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.annotation.IntegerRes
 import androidx.preference.PreferenceManager
 import com.yllxh.currentweather.data.LatLng
 import java.util.*

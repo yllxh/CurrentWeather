@@ -1,9 +1,7 @@
 package com.yllxh.currentweather.utils
 import android.content.Context
 import android.location.Location
-import android.util.Log
 import com.google.android.gms.location.*
-import com.yllxh.currentweather.utils.extentions.log
 
 class LocationRetriever(private val context: Context,
                         private val onLocationReceived: (Location) -> Unit) {

@@ -43,7 +43,7 @@ interface WeatherApiService {
                                 @Query("lang") lang: String? = DEFAULT_LANGUAGE,
                                 @Query("appid") api:String = WEATHER_API_KEY
     ): Deferred<WeekReport>
-//    api.openweathermap.org/data/2.5/forecast
+
     @GET("data/2.5/forecast")
     fun getForecastFromLocationAsync(@Query("lat") latitude: Double,
                                      @Query("lon") longitude: Double,
