@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.yllxh.currentweather.adapters.NextHoursReportAdapter
 import com.yllxh.currentweather.databinding.FragmentMainBinding
 import com.yllxh.currentweather.utils.*
 
@@ -25,6 +26,12 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMainBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+
+        binding.apply {
+            nextHoursRecycleView.adapter = NextHoursReportAdapter {}
+        }
 
         observeLiveData()
 
@@ -34,11 +41,7 @@ class MainFragment : Fragment() {
     private fun observeLiveData() {
         with(viewModel) {
 
-            observe(todaysReport) {
-                it?.let {
-                    binding.report = it
-                }
-            }
+            observe(todaysReport) { binding.report = it }
 
             observe(isConnected) {
                 if (it) {
@@ -46,26 +49,20 @@ class MainFragment : Fragment() {
                 } else if (!searchState.isSuccessful()){
                     onNotConnected()
                 }
-
-                log("ended is coneected")
             }
 
             observe(isLocationRequested) { wasRequested ->
-                wasRequested?.let {
-                    if (!wasRequested)
-                        return@let
+                if (!wasRequested)
+                    return@observe
 
-                    if (hasLocationPermission) {
-                        getCurrentLocation()
-                    } else {
-                        requestLocationPermission()
-                    }
+                if (hasLocationPermission) {
+                    getCurrentLocation()
+                } else {
+                    requestLocationPermission()
                 }
             }
 
-            observe(searchState) {
-                it?.let { onSearchStateChanged(it) }
-            }
+            observe(searchState) { onSearchStateChanged(it) }
         }
     }
 

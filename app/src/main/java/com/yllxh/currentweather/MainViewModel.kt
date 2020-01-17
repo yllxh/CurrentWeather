@@ -3,8 +3,10 @@ package com.yllxh.currentweather
 import android.app.Application
 import android.location.Location
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.yllxh.currentweather.data.reports.TodaysReport
+import com.yllxh.currentweather.data.reports.WeekReport
 import com.yllxh.currentweather.utils.*
 import retrofit2.HttpException
 
@@ -18,16 +20,20 @@ class MainViewModel(app: Application) : AndroidViewModel(app), NetworkAlerter.Ne
     private val repository = AppRepository()
 
     private val _todaysReport = MutableLiveData<TodaysReport>()
-    val todaysReport get() = _todaysReport
+    val todaysReport: LiveData<TodaysReport> get() = _todaysReport
+
+
+    private val _weekReport = MutableLiveData<WeekReport>()
+    val weekReport: LiveData<WeekReport> get() = _weekReport
 
     private val _isConnected = MutableLiveData<Boolean>()
-    val isConnected get() = _isConnected
+    val isConnected: LiveData<Boolean> get() = _isConnected
 
     private val _isLocationRequested = MutableLiveData<Boolean>()
-    val isLocationRequested get() = _isLocationRequested
+    val isLocationRequested: LiveData<Boolean> get() = _isLocationRequested
 
     private val _searchState = MutableLiveData<SearchState>()
-    val searchState get() = _searchState
+    val searchState: LiveData<SearchState> get() = _searchState
 
     private val networkAlerter = NetworkAlerter(this, getApplication())
 
@@ -39,19 +45,29 @@ class MainViewModel(app: Application) : AndroidViewModel(app), NetworkAlerter.Ne
         }
     }
 
-
-
     private fun useLocationToGetReport() = onMainContext {
         try {
             _searchState.toNew(SearchState.SEARCHING)
-            _todaysReport.to(
-                repository.fetchTodaysReportForLocation(savedLocation, unitType, language)
-            )
+
+            val todaysReportAsync =
+                repository.fetchTodaysReportForLocationAsync(savedLocation, unitType, language)
+
+            val weekReportAsync =
+                repository.fetchWeekReportForLocationAsync(savedLocation, unitType, language)
+
+            updateReports(todaysReportAsync.await(), weekReportAsync.await())
+
             _searchState.toNew(SearchState.SUCCEEDED)
 
         } catch (e: HttpException) {
             _searchState.toNew(SearchState.FAILED)
         }
+    }
+
+    private fun updateReports(todaysReport: TodaysReport, weekReport: WeekReport) {
+        log(weekReport.toString())
+        _todaysReport.to(todaysReport)
+        _weekReport.to(weekReport)
     }
 
     override fun onNetworkStateChanged(state: NetworkState) {

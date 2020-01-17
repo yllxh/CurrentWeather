@@ -8,6 +8,10 @@ import java.util.*
 
 const val CITY_NOT_SET = "not_set"
 
+const val CELSIUS = "metric"
+const val FAHRENHEIT = "imperial"
+const val DEFAULT_UNIT_TYPE = CELSIUS
+
 private const val INVALID_COORDINATE = Int.MAX_VALUE.toDouble().toString()
 
 private const val UNIT_TYPE_KEY = "unit_type_key"

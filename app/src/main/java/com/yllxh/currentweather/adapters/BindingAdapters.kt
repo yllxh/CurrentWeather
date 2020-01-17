@@ -4,12 +4,44 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.yllxh.currentweather.R
 import com.yllxh.currentweather.data.reports.Report
-import com.yllxh.currentweather.utils.fromSecondsToDateStamp
-import com.yllxh.currentweather.utils.getDescriptionFromWeatherId
-import com.yllxh.currentweather.utils.getWeatherIconId
-import com.yllxh.currentweather.utils.translateDay
+import com.yllxh.currentweather.data.reports.WeekReport
+import com.yllxh.currentweather.utils.*
 
+
+@BindingAdapter("weekReportData")
+fun RecyclerView.setWeekReportData(weekReport: WeekReport?) {
+    weekReport?.let {
+        when (adapter) {
+            is NextHoursReportAdapter -> {
+                val hourReportsInADay = context.resources.getInteger(R.integer.next_24_hours_count)
+                (adapter as NextHoursReportAdapter).apply {
+                    reports = weekReport.hourReports.take(hourReportsInADay)
+                }
+
+            }
+            is HourReportAdapter -> {
+                (adapter as HourReportAdapter).apply {
+                    reports = weekReport.dailyReports[0].hourlyReports
+                }
+            }
+            else -> throw IllegalArgumentException(
+                "RecycleView adapter type is"
+                        + " not supported by binding adapter."
+            )
+        }
+    }
+}
+
+
+@BindingAdapter("report_hour")
+fun TextView.setReportHour(report: Report?) {
+    report?.let {
+        text = fromSecondsToHourString(report.timeInSeconds)
+    }
+}
 
 @BindingAdapter("report_day")
 fun TextView.setReportDay(report: Report?) {

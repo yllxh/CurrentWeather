@@ -14,6 +14,7 @@ data class TodaysReport(
     @SerializedName("sys")      private val countryInfo: CountryInfo = CountryInfo(),
     @SerializedName("main")     private val mainInfo: MainInfo = MainInfo(),
     @SerializedName("wind")     private val wind: Wind = Wind(),
+    @SerializedName("coord")    val latLng: LatLng = LatLng(),
     @SerializedName("clouds")   private val clouds: Clouds = Clouds(),
     @SerializedName("weather")  private val weather: List<Weather> = listOf()
 ) : Report, Parcelable {

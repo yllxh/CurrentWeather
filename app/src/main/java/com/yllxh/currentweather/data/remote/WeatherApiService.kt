@@ -45,11 +45,11 @@ interface WeatherApiService {
     ): Deferred<WeekReport>
 
     @GET("data/2.5/forecast")
-    fun getForecastFromLocationAsync(@Query("lat") latitude: Double,
-                                     @Query("lon") longitude: Double,
-                                     @Query("units") unitType: String? = DEFAULT_UNIT_TYPE,
-                                     @Query("lang") lang: String? = DEFAULT_LANGUAGE,
-                                     @Query("appid") api:String = WEATHER_API_KEY
+    fun getWeekReportFromLocationAsync(@Query("lat") latitude: Double,
+                                       @Query("lon") longitude: Double,
+                                       @Query("units") unitType: String? = DEFAULT_UNIT_TYPE,
+                                       @Query("lang") lang: String? = DEFAULT_LANGUAGE,
+                                       @Query("appid") api:String = WEATHER_API_KEY
     ): Deferred<WeekReport>
 
 }

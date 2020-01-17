@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="report"
+            type="com.yllxh.currentweather.data.reports.HourReport" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:minWidth="150dp"
+        android:padding="8dp"
+        app:cardBackgroundColor="@color/card_background_color"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            tools:context="com.yllxh.weatherapp.fragments.MainFragment">
+
+
+            <TextView
+                android:id="@+id/time_textView"
+                report_hour="@{report}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/sky_imageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/sky_imageView"
+                app:layout_constraintTop_toTopOf="@+id/sky_imageView"
+                tools:text="00:00" />
+
+            <TextView
+                android:id="@+id/temperature_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@{@string/only_temp(report.temp)}"
+                android:textSize="24sp"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/sky_imageView"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/only_temp" />
+
+            <ImageView
+                android:id="@+id/sky_imageView"
+                report_contentDescription="@{report}"
+                report_icon="@{report}"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/temperature_textView"
+                app:layout_constraintEnd_toStartOf="@+id/time_textView"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/temperature_textView"
+                app:layout_constraintTop_toTopOf="@+id/temperature_textView"
+                tools:srcCompat="@drawable/mist_50d" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

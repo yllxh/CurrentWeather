@@ -8,7 +8,6 @@
         <variable
             name="report"
             type="com.yllxh.currentweather.data.reports.TodaysReport" />
-
         <variable
             name="viewModel"
             type="com.yllxh.currentweather.MainViewModel" />
@@ -220,6 +219,7 @@
             android:layout_marginBottom="16dp"
             android:orientation="horizontal"
             android:clipToPadding="false"
+            weekReportData="@{viewModel.weekReport}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/daily_forecast_button"
             app:layout_constraintEnd_toEndOf="parent"

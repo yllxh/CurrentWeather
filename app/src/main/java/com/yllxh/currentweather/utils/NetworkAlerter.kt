@@ -37,20 +37,13 @@ class NetworkAlerter (
 
     private fun initNetworkCallback() {
         networkCallback = object : ConnectivityManager.NetworkCallback() {
-            override fun onUnavailable() {
-                super.onUnavailable()
-                log("not available")
-            }
-
             override fun onAvailable(network: Network) {
                 super.onAvailable(network)
-                log("onAvailable")
                 listener.onNetworkStateChanged(NetworkState.AVAILABLE)
             }
 
             override fun onLost(network: Network) {
                 super.onLost(network)
-                log("onLost")
                 listener.onNetworkStateChanged(NetworkState.LOST)
             }
         }

@@ -1,6 +1,7 @@
 package com.yllxh.currentweather.utils
 
 import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -16,6 +17,23 @@ private fun fromSecondsToDate(seconds: Int): Date {
     DateFormat.getDateTimeInstance().calendar.apply {
         timeInMillis = TimeUnit.SECONDS.toMillis(seconds.toLong())
         return time
+    }
+}
+
+
+/**
+ * Helper function to convert seconds to HH:ss format.
+ *
+ * @param   seconds Seconds to be converted to a HH:ss format string.
+ *
+ * @return  The hour in a HH:ss format based on the seconds passed.
+ */
+fun fromSecondsToHourString(seconds: Int): String {
+    val date = fromSecondsToDate(seconds)
+
+    (DateFormat.getInstance() as SimpleDateFormat).apply {
+        applyPattern("HH:ss")
+        return format(date)
     }
 }
 

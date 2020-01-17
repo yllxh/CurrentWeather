@@ -3,4 +3,9 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+
+
+    <color name="ic_launcher_background">#3F455F</color>
+    <color name="card_background_color">#36FFFFFF</color>
 </resources>
