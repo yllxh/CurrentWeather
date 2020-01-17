@@ -94,18 +94,17 @@ class MainViewModel(app: Application) : AndroidViewModel(app), NetworkAlerter.Ne
     }
 
     fun onLocationPermissionDenied() {
-        if (searchState.isSuccessful())
-            return
-
         _searchState.to(SearchState.MISSING_LOCATION_PERMISSION)
-
-        _isLocationRequested.to(true)
     }
 
     fun onNotConnectedDialogDismissed() {
         if (isConnected.isFalse()) {
             _isConnected.toSelf()
         }
+    }
+
+    fun onMyLocationClicked(){
+        _isLocationRequested.to(true)
     }
 
     override fun onCleared() {

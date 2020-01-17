@@ -85,7 +85,6 @@ class MainFragment : Fragment() {
         when (state) {
             SearchState.FAILED -> viewModel.getTodaysWeatherReport()
             SearchState.MISSING_LOCATION_PERMISSION -> toast(getString(R.string.location_permission_denied))
-            SearchState.SEARCHING -> toast(getString(R.string.searching))
             else -> return
         }
     }
