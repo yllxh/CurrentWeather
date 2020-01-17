@@ -1,5 +1,6 @@
 package com.yllxh.currentweather
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -7,7 +8,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import com.yllxh.currentweather.databinding.FragmentMainBinding
 import com.yllxh.currentweather.utils.*
 
@@ -15,7 +15,7 @@ import com.yllxh.currentweather.utils.*
 class MainFragment : Fragment() {
 
     private val hasLocationPermission get() = hasLocationPermission(requireContext())
-    private lateinit var binding : FragmentMainBinding
+    private lateinit var binding: FragmentMainBinding
     private val viewModel by lazy {
         ViewModelProviders.of(this).get(MainViewModel::class.java)
     }
@@ -24,39 +24,66 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = FragmentMainBinding.inflate(inflater, container, false)
 
-        NetworkAlerter.setListener(viewModel, requireContext(), lifecycle)
-
-        viewModel.isConnected.observe(this, Observer {
-            it?.let { onNetworkStateChanged(it) }
-        })
-
-        viewModel.todaysReport.observe(this, Observer {
-            it?.let {
-                binding.report = it
-            }
-        })
-
-        viewModel.isLocationRequested.observe(this, Observer { wasRequested ->
-            wasRequested?.let {
-                if (!wasRequested)
-                    return@let
-
-                if (hasLocationPermission){
-                    requestCurrentLocation()
-                } else {
-                    requestLocationPermission()
-                }
-
-            }
-        })
+        observeLiveData()
 
         return binding.root
     }
 
-    private fun requestCurrentLocation() {
+    private fun observeLiveData() {
+        with(viewModel) {
+
+            observe(todaysReport) {
+                it?.let {
+                    binding.report = it
+                }
+            }
+
+            observe(isConnected) {
+                if (it) {
+                    getTodaysWeatherReport()
+                } else if (!searchState.isSuccessful()){
+                    onNotConnected()
+                }
+
+                log("ended is coneected")
+            }
+
+            observe(isLocationRequested) { wasRequested ->
+                wasRequested?.let {
+                    if (!wasRequested)
+                        return@let
+
+                    if (hasLocationPermission) {
+                        getCurrentLocation()
+                    } else {
+                        requestLocationPermission()
+                    }
+                }
+            }
+
+            observe(searchState) {
+                it?.let { onSearchStateChanged(it) }
+            }
+        }
+    }
+
+    private fun onSearchStateChanged(state: SearchState) {
+        when (state) {
+            SearchState.FAILED -> viewModel.getTodaysWeatherReport()
+            SearchState.MISSING_LOCATION_PERMISSION -> toast(getString(R.string.location_permission_denied))
+            SearchState.SEARCHING -> toast(getString(R.string.searching))
+            else -> return
+        }
+    }
+
+    private fun onNotConnected() {
+        NotConnectedDialog.newInstance(this)
+            .show(requireFragmentManager(), NotConnectedDialog.TAG)
+    }
+
+    private fun getCurrentLocation() {
         LocationRetriever(requireContext()) {
             viewModel.onLocationRetrieved(it)
         }
@@ -83,12 +110,13 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun onNetworkStateChanged(isConnected: Boolean) {
-        val ms = when {
-            isConnected -> "Connected"
-            else -> "Internet connection lost."
-        }
-    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
+        when (requestCode) {
+            NotConnectedDialog.NOT_CONNECTED_DIALOG_REQUEST -> viewModel.onNotConnectedDialogDismissed()
+        }
+
+    }
 }
 

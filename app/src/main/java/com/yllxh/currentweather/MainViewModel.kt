@@ -30,59 +30,70 @@ class MainViewModel(app: Application) : AndroidViewModel(app), NetworkAlerter.Ne
     private val _searchState = MutableLiveData<SearchState>()
     val searchState get() = _searchState
 
+    private val networkAlerter = NetworkAlerter(this, getApplication())
 
-    override fun onNetworkStateChanged(state: NetworkState) = onMainContext {
-        val isConnected: Boolean = when (state) {
-            NetworkState.AVAILABLE -> true
-            else -> {
-                false
-            }
-        }
-        _isConnected.value = isConnected
-
-        if (!isConnected) {
-            return@onMainContext
-        } else {
-            getTodaysWeatherReport()
+    fun getTodaysWeatherReport() {
+        _searchState.toNew(SearchState.SEARCHING)
+        when {
+            isSavedLocationValid -> useLocationToGetReport()
+            else -> _isLocationRequested.to(true)
         }
     }
 
-    private fun getTodaysWeatherReport() = when {
-        isSavedLocationValid -> useLocationToGetReport()
-        else -> _isLocationRequested.value = true
-    }
+
 
     private fun useLocationToGetReport() = onMainContext {
         try {
-            _searchState.searching()
-
-            _todaysReport.value =
+            _searchState.toNew(SearchState.SEARCHING)
+            _todaysReport.to(
                 repository.fetchTodaysReportForLocation(savedLocation, unitType, language)
+            )
+            _searchState.toNew(SearchState.SUCCEEDED)
 
-            _searchState.succeeded()
         } catch (e: HttpException) {
-            _searchState.failed()
+            _searchState.toNew(SearchState.FAILED)
         }
+    }
 
+    override fun onNetworkStateChanged(state: NetworkState) {
+        val isConnected: Boolean = when (state) {
+            NetworkState.AVAILABLE -> true
+            NetworkState.LOST -> false
+        }
+        _isConnected.toNew(isConnected)
     }
 
     fun onLocationRetrieved(location: Location) {
-        _isLocationRequested.value = false
+        _isLocationRequested.to(false)
 
         setLastLocation(getApplication(), location.toLatLng())
 
-        if (_isConnected.value == true) {
+        if (_isConnected.isTrue()) {
             useLocationToGetReport()
         }
     }
 
-    fun onLocationPermissionDenied() {
-        _isLocationRequested.value = false
-        _searchState.failed()
-    }
-
     fun onLocationPermissionApproved() {
-        _isLocationRequested.value = true
+        _isLocationRequested.to(true)
     }
 
+    fun onLocationPermissionDenied() {
+        if (searchState.isSuccessful())
+            return
+
+        _searchState.to(SearchState.MISSING_LOCATION_PERMISSION)
+
+        _isLocationRequested.to(true)
+    }
+
+    fun onNotConnectedDialogDismissed() {
+        if (isConnected.isFalse()) {
+            _isConnected.toSelf()
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        networkAlerter.stopListening()
+    }
 }

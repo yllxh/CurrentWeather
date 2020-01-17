@@ -33,6 +33,11 @@
     <string name="albanian" translatable="false">Shqip</string>
     <string name="german" translatable="false">Deutsch</string>
     <string name="select_language">Choose a language</string>
-    <string name="ok">OK</string>
     <string name="next_24_hours">Next 24 hours</string>
+    <string name="ok">OK</string>
+    <string name="internet_required">Internet Connection Required</string>
+    <string name="internet_required_message">The app requeires internet connection in order to get  weather data.</string>
+    <string name="location_permission_denied">Location permission denied</string>
+    <string name="searching">Searching</string>
+    <string name="success">Success</string>
 </resources>

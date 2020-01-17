@@ -7,5 +7,6 @@ import kotlinx.android.parcel.Parcelize
 enum class SearchState : Parcelable {
     SEARCHING,
     SUCCEEDED,
-    FAILED
+    FAILED,
+    MISSING_LOCATION_PERMISSION
 }
