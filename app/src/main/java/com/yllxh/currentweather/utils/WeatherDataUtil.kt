@@ -7,10 +7,6 @@ import com.yllxh.currentweather.data.reports.HourReport
 
 
 
-fun translateDay(context: Context, dayIndex: Int): String {
-    return context.resources.getStringArray(R.array.days)[dayIndex]
-}
-
 /**
  * Helper function used to retrieve the resource id of a weather
  * icon based on the provide icon code.

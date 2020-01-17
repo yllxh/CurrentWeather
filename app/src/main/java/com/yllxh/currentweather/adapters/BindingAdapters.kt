@@ -20,11 +20,15 @@ fun RecyclerView.setWeekReportData(weekReport: WeekReport?) {
                 (adapter as NextHoursReportAdapter).apply {
                     reports = weekReport.hourReports.take(hourReportsInADay)
                 }
-
             }
             is HourReportAdapter -> {
                 (adapter as HourReportAdapter).apply {
                     reports = weekReport.dailyReports[0].hourlyReports
+                }
+            }
+            is DailyReportAdapter -> {
+                (adapter as DailyReportAdapter).apply {
+                    dailyReports = weekReport.dailyReports
                 }
             }
             else -> throw IllegalArgumentException(
@@ -35,6 +39,13 @@ fun RecyclerView.setWeekReportData(weekReport: WeekReport?) {
     }
 }
 
+
+@BindingAdapter("report_day_abbreviated")
+fun TextView.setReportDayAbbreviated(report: Report?) {
+    report?.let {
+        text = translateDayAbbreviated(context, report.day)
+    }
+}
 
 @BindingAdapter("report_hour")
 fun TextView.setReportHour(report: Report?) {

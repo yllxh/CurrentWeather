@@ -1,10 +1,11 @@
-package com.yllxh.currentweather
+package com.yllxh.currentweather.viewmodels
 
 import android.app.Application
 import android.location.Location
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.yllxh.currentweather.AppRepository
 import com.yllxh.currentweather.data.reports.TodaysReport
 import com.yllxh.currentweather.data.reports.WeekReport
 import com.yllxh.currentweather.utils.*

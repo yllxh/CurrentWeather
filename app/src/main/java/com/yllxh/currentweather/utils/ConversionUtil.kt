@@ -1,5 +1,7 @@
 package com.yllxh.currentweather.utils
 
+import android.content.Context
+import com.yllxh.currentweather.R
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -63,4 +65,14 @@ private fun fromSecondsToCalendar(seconds: Int): Calendar {
     return DateFormat.getDateTimeInstance().calendar.apply {
         timeInMillis = TimeUnit.SECONDS.toMillis(seconds.toLong())
     }
+}
+
+fun translateDayAbbreviated(context: Context, dayIndex: Int): String? {
+    return context.resources.getStringArray(R.array.days_abbreviated)[dayIndex]
+}
+
+
+
+fun translateDay(context: Context, dayIndex: Int): String {
+    return context.resources.getStringArray(R.array.days)[dayIndex]
 }

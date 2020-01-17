@@ -7,7 +7,20 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.yllxh.currentweather.MainFragment"
+        android:name="com.yllxh.currentweather.fragments.MainFragment"
         android:label="main_fragment"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_forecastFragment"
+            app:destination="@id/forecastFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forecastFragment"
+        android:name="com.yllxh.currentweather.fragments.ForecastFragment"
+        android:label="ForecastFragment"
+        tools:layout="@layout/fragment_forecast">
+        <argument
+            android:name="weekReport"
+            app:argType="com.yllxh.currentweather.data.reports.WeekReport" />
+    </fragment>
 </navigation>

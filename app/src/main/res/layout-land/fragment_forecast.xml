@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="weekReport"
+            type="com.yllxh.currentweather.data.reports.WeekReport" />
+
+        <variable
+            name="selectedDay"
+            type="String" />
+    </data>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:orientation="horizontal"
+            tools:context="com.yllxh.weatherapp.fragments.ForecastFragment">
+
+            <TextView
+                android:id="@+id/city_name_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/city_name(weekReport.city.name, weekReport.city.country)}"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="@+id/daily_report_recycleView"
+                app:layout_constraintStart_toStartOf="@+id/daily_report_recycleView"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="CITY NAME" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/daily_report_recycleView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:clipToPadding="false"
+                android:orientation="vertical"
+                app:weekReportData="@{weekReport}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/hourly_report_recycleView"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/city_name_textView" />
+
+            <TextView
+                android:id="@+id/day_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{selectedDay}"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="@+id/hourly_report_recycleView"
+                app:layout_constraintStart_toStartOf="@+id/hourly_report_recycleView"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Monday" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/hourly_report_recycleView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:clipToPadding="false"
+                android:orientation="vertical"
+                app:weekReportData="@{weekReport}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/daily_report_recycleView"
+                app:layout_constraintTop_toBottomOf="@+id/day_textView" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

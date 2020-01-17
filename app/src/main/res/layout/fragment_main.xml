@@ -10,7 +10,7 @@
             type="com.yllxh.currentweather.data.reports.TodaysReport" />
         <variable
             name="viewModel"
-            type="com.yllxh.currentweather.MainViewModel" />
+            type="com.yllxh.currentweather.viewmodels.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +19,7 @@
         android:background="@android:color/transparent"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        tools:context="com.yllxh.currentweather.MainFragment">
+        tools:context="com.yllxh.currentweather.fragments.MainFragment">
 
         <TextView
             android:id="@+id/place_name"

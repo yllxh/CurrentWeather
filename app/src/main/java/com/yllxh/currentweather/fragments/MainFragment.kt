@@ -1,4 +1,4 @@
-package com.yllxh.currentweather
+package com.yllxh.currentweather.fragments
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -8,9 +8,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.yllxh.currentweather.viewmodels.MainViewModel
+import com.yllxh.currentweather.NotConnectedDialog
+import com.yllxh.currentweather.R
 import com.yllxh.currentweather.adapters.NextHoursReportAdapter
 import com.yllxh.currentweather.databinding.FragmentMainBinding
 import com.yllxh.currentweather.utils.*
+import com.yllxh.currentweather.fragments.MainFragmentDirections.actionMainFragmentToForecastFragment as toForecastFragment
 
 
 class MainFragment : Fragment() {
@@ -31,11 +36,22 @@ class MainFragment : Fragment() {
 
         binding.apply {
             nextHoursRecycleView.adapter = NextHoursReportAdapter {}
+
         }
 
-        observeLiveData()
 
+
+        observeLiveData()
+        setOnClickListeners()
         return binding.root
+    }
+
+    private fun setOnClickListeners() {
+        binding.dailyForecastButton.setOnClickListener {
+            viewModel.weekReport.value?.let {
+                findNavController().navigate(toForecastFragment(it))
+            }
+        }
     }
 
     private fun observeLiveData() {
@@ -77,7 +93,9 @@ class MainFragment : Fragment() {
 
     private fun onNotConnected() {
         NotConnectedDialog.newInstance(this)
-            .show(requireFragmentManager(), NotConnectedDialog.TAG)
+            .show(requireFragmentManager(),
+                NotConnectedDialog.TAG
+            )
     }
 
     private fun getCurrentLocation() {
