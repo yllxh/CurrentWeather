@@ -4,7 +4,6 @@ import android.app.Application
 import android.location.Location
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.yllxh.currentweather.data.Repository
 import com.yllxh.currentweather.data.reports.TodaysReport
 import com.yllxh.currentweather.utils.*
 import retrofit2.HttpException
@@ -16,7 +15,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app), NetworkAlerter.Ne
     private val unitType get() = getUnitType(getApplication())
     private val language get() = getSavedUILanguage(getApplication())
 
-    private val repository = Repository()
+    private val repository = AppRepository()
 
     private val _todaysReport = MutableLiveData<TodaysReport>()
     val todaysReport get() = _todaysReport

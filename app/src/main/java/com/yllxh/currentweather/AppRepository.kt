@@ -1,11 +1,12 @@
-package com.yllxh.currentweather.data
+package com.yllxh.currentweather
 
+import com.yllxh.currentweather.data.LatLng
 import com.yllxh.currentweather.data.remote.WeatherApi
 import com.yllxh.currentweather.data.reports.TodaysReport
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class Repository {
+class AppRepository {
     suspend fun fetchTodaysReportForLocation(
         latLng: LatLng,
         unitType: String,
