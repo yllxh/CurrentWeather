@@ -10,10 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.yllxh.currentweather.viewmodels.MainViewModel
-import com.yllxh.currentweather.NotConnectedDialog
+import com.yllxh.currentweather.dialogs.NotConnectedDialog
 import com.yllxh.currentweather.R
 import com.yllxh.currentweather.adapters.NextHoursReportAdapter
 import com.yllxh.currentweather.databinding.FragmentMainBinding
+import com.yllxh.currentweather.dialogs.DetailsDialog
 import com.yllxh.currentweather.utils.*
 import com.yllxh.currentweather.fragments.MainFragmentDirections.actionMainFragmentToForecastFragment as toForecastFragment
 
@@ -34,12 +35,10 @@ class MainFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        binding.apply {
-            nextHoursRecycleView.adapter = NextHoursReportAdapter {}
-
-        }
-
-
+        binding.nextHoursRecycleView.adapter = NextHoursReportAdapter {
+                DetailsDialog.newInstance(it)
+                    .show(requireFragmentManager(), DetailsDialog.TAG)
+            }
 
         observeLiveData()
         setOnClickListeners()

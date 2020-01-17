@@ -39,6 +39,18 @@ fun RecyclerView.setWeekReportData(weekReport: WeekReport?) {
     }
 }
 
+@BindingAdapter("report_windSpeed")
+fun TextView.setWindSpeedText(report: Report?) {
+    val unitType = getUnitType(context)
+    report?.apply {
+        val resId = when (unitType) {
+            CELSIUS -> R.string.wind_speed_metric
+            else -> R.string.wind_speed_imperial
+        }
+        text = context.getString(resId , windSpeed)
+    }
+}
+
 
 @BindingAdapter("report_day_abbreviated")
 fun TextView.setReportDayAbbreviated(report: Report?) {

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="reportDetails"
+            type="com.yllxh.currentweather.data.reports.Report" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/details_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/pressure_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:gravity="center_horizontal"
+            android:text="@{@string/pressure(reportDetails.pressure)}"
+            android:textSize="18sp"
+            tools:text="@string/pressure" />
+
+        <TextView
+            android:id="@+id/humidity_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:gravity="center_horizontal"
+            android:text="@{@string/humidity(reportDetails.humidity)}"
+            android:textSize="18sp"
+            tools:text="@string/humidity" />
+
+        <TextView
+            android:id="@+id/wind_speed_textView"
+            report_windSpeed="@{reportDetails}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:gravity="center_horizontal"
+            android:textSize="18sp"
+            tools:text="@string/wind_speed_metric" />
+
+        <TextView
+            android:id="@+id/wind_degree_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:gravity="center_horizontal"
+            android:textSize="18sp"
+            android:text="@{@string/wind_degree(reportDetails.windDegree)}"
+            tools:text="@string/wind_degree"
+            />
+
+        <TextView
+            android:id="@+id/cloudiness_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:gravity="center_horizontal"
+            android:text="@{@string/cloudiness(reportDetails.cloudiness)}"
+            android:textSize="18sp"
+            tools:text="@string/wind_degree" />
+    </LinearLayout>
+</layout>

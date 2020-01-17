@@ -1,4 +1,4 @@
-package com.yllxh.currentweather
+package com.yllxh.currentweather.dialogs
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -8,6 +8,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import com.yllxh.currentweather.R
 
 class NotConnectedDialog: DialogFragment() {
 
@@ -31,7 +32,9 @@ class NotConnectedDialog: DialogFragment() {
 
         fun newInstance(fragment: Fragment): NotConnectedDialog {
             return NotConnectedDialog().apply {
-                setTargetFragment(fragment, NOT_CONNECTED_DIALOG_REQUEST)
+                setTargetFragment(fragment,
+                    NOT_CONNECTED_DIALOG_REQUEST
+                )
             }
         }
     }

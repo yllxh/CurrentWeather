@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.yllxh.currentweather.adapters.DailyReportAdapter
 import com.yllxh.currentweather.adapters.HourReportAdapter
 import com.yllxh.currentweather.databinding.FragmentForecastBinding
+import com.yllxh.currentweather.dialogs.DetailsDialog
 import com.yllxh.currentweather.utils.translateDay
 
 class ForecastFragment : Fragment() {
@@ -21,7 +22,10 @@ class ForecastFragment : Fragment() {
 
         val weekReport = ForecastFragmentArgs.fromBundle(arguments!!).weekReport
 
-        val hourReportAdapter = HourReportAdapter {}
+        val hourReportAdapter = HourReportAdapter {
+            DetailsDialog.newInstance(it)
+                .show(requireFragmentManager(), DetailsDialog.TAG)
+        }
 
         val dailyReportAdapter = DailyReportAdapter {
             hourReportAdapter.reports = it.hourlyReports
