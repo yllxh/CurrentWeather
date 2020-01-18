@@ -12,7 +12,6 @@
     <string name="celsius_symbol" translatable="false">°C</string>
     <string name="fahrenheit_symbol" translatable="false">°F</string>
     <string name="wind_speed_metric">Wind Speed: %1$.1f m/s</string>
-    <string name="temp_min_max_feels"> %1$.1f°/%2$.1f°\nFeels: %3$.0f°</string>
     <string name="wind_speed_imperial">Wind Speed: %1$.1f mi/h</string>
 
     <string name="cancel">Cancel</string>
@@ -22,17 +21,10 @@
     <string name="search_failed">Search failed</string>
     <string name="daily_forecast">Daily Forecast</string>
     <string name="enter_city_name">Enter City Name</string>
-    <string name="location_not_found">Could not find location.</string>
     <string name="enter_city_name_hint">e.g. berlin, istanbul</string>
     <string name="search_button_description">Search for a place by name.</string>
     <string name="my_location_button_description">Get weather information for your location.</string>
-    <string name="location_permission_denied_permanently">Location Permission Is PERMANENTLY denied.</string>
-    <string name="change_language" translatable="false">Change Language</string>
 
-    <string name="english" translatable="false">English</string>
-    <string name="albanian" translatable="false">Shqip</string>
-    <string name="german" translatable="false">Deutsch</string>
-    <string name="select_language">Choose a language</string>
     <string name="next_24_hours">Next 24 hours</string>
     <string name="ok">OK</string>
     <string name="internet_required">Internet Connection Required</string>

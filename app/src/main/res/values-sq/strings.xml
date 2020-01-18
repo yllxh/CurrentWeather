@@ -8,7 +8,6 @@
     <string name="feels_temp">Ndjehet si: %1$.0f°</string>
     <string name="wind_degree">Shkalla erës: %1$d°</string>
     <string name="wind_speed_metric">Shpejtesia e eres: %1$.1f m/s</string>
-    <string name="temp_min_max_feels"> %1$.1f°/%2$.1f°\nNdjehet si: %3$.0f°</string>
     <string name="wind_speed_imperial">Shpejtesia e eres: %1$.1f mi/h</string>
 
     <string name="cancel">Anulo</string>
@@ -18,12 +17,9 @@
     <string name="search_failed">Kërkimi dështoi.</string>
     <string name="daily_forecast">Parashikimi ditor</string>
     <string name="enter_city_name">Shruaj emrin e qytetit</string>
-    <string name="location_not_found">Nuk u gjet dot vendndodhja.</string>
     <string name="enter_city_name_hint">p.sh. berlin, istanbul</string>
     <string name="search_button_description">Kërkoni një vend sipas emër.</string>
     <string name="my_location_button_description">Merrni të dhënat e motit për vendndodhjen tuaj.</string>
-    <string name="location_permission_denied_permanently">Përdorimi i vendndodhjes i është mohuar aplikacionit.</string>
-    <string name="select_language">Zgjidhni një gjuhë</string>
     <string name="ok">Në rregull</string>
     <string name="next_24_hours">24 orët e ardhshme</string>
 

@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="languages_codes">
-        <item>en</item>
-        <item>sq</item>
-        <item>de</item>
-    </string-array>
-
     <integer-array name="weather_icon_ids">
         <item>@drawable/sun_01d</item>
         <item>@drawable/moon_01n</item>

@@ -116,7 +116,7 @@ fun ViewModel.onIOContext(block : suspend () -> Unit) {
     }
 }
 
-fun DialogFragment.createAlertDialog(binding: ViewDataBinding): AlertDialog {
+fun createAlertDialog(binding: ViewDataBinding): AlertDialog {
     return AlertDialog.Builder(binding.root.context)
         .setView(binding.root)
         .create()

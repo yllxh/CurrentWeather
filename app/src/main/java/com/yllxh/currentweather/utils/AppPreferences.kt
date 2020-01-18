@@ -89,12 +89,6 @@ fun getCityName(context: Context): String {
     }
 }
 
-
-fun isCityNameSet(context: Context): Boolean {
-    return getCityName(context) != CITY_NOT_SET
-}
-
-
 fun setCityName(context: Context, cityName: String) {
     val name = if (cityName.isBlank()) CITY_NOT_SET else cityName
     PreferenceManager.getDefaultSharedPreferences(context).apply {

@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import com.yllxh.currentweather.adapters.DailyReportAdapter
 import com.yllxh.currentweather.adapters.HourReportAdapter
 import com.yllxh.currentweather.databinding.FragmentForecastBinding
-import com.yllxh.currentweather.dialogs.DetailsDialog
 import com.yllxh.currentweather.utils.showDetailsDialog
 import com.yllxh.currentweather.utils.translateDay
 
