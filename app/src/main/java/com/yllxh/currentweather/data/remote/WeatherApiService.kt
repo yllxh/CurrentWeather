@@ -23,10 +23,10 @@ private val retrofit = Retrofit.Builder()
 interface WeatherApiService {
 
     @GET("data/2.5/weather")
-    fun getWeatherForCityAsync(@Query("q") cityName: String,
-                               @Query("units") unitType: String? = DEFAULT_UNIT_TYPE,
-                               @Query("lang") lang: String? = DEFAULT_LANGUAGE,
-                               @Query("appid") api:String = WEATHER_API_KEY
+    fun getReportUsingCityNameAsync(@Query("q") cityName: String,
+                                    @Query("units") unitType: String? = DEFAULT_UNIT_TYPE,
+                                    @Query("lang") lang: String? = DEFAULT_LANGUAGE,
+                                    @Query("appid") api:String = WEATHER_API_KEY
     ) : Deferred<TodaysReport>
 
     @GET("data/2.5/weather")
@@ -38,10 +38,10 @@ interface WeatherApiService {
     ): Deferred<TodaysReport>
 
     @GET("data/2.5/forecast")
-    fun getForecastForCityAsync(@Query("q") cityName: String,
-                                @Query("units") unitType: String? = DEFAULT_UNIT_TYPE,
-                                @Query("lang") lang: String? = DEFAULT_LANGUAGE,
-                                @Query("appid") api:String = WEATHER_API_KEY
+    fun getWeekReportUsingCityName(@Query("q") cityName: String,
+                                   @Query("units") unitType: String? = DEFAULT_UNIT_TYPE,
+                                   @Query("lang") lang: String? = DEFAULT_LANGUAGE,
+                                   @Query("appid") api:String = WEATHER_API_KEY
     ): Deferred<WeekReport>
 
     @GET("data/2.5/forecast")

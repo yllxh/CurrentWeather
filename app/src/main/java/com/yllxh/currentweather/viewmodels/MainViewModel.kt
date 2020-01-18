@@ -15,20 +15,18 @@ import com.yllxh.currentweather.utils.*
 import retrofit2.HttpException
 
 const val USE_LOCATION = 0
+const val USE_CITY_NAME = 1
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     private val isSavedLocationValid get() = isValidLocationSaved(getApplication())
-    private val savedLocation get() = getLastSavedLocation(getApplication())
-    private val savedUnitType get() = getUnitType(getApplication())
-    private val language get() = getSavedUILanguage(getApplication())
 
-    private val repository = AppRepository()
+    private val repository = AppRepository(getApplication())
 
     val todaysReport: LiveData<TodaysReport> get() = repository.todaysReport
     val weekReport: LiveData<WeekReport> get() = repository.weekReport
 
-    private val _unitType = MutableLiveData<String>(savedUnitType)
+    private val _unitType = MutableLiveData<String>(repository.savedUnitType)
 
     val isCelsiusSelected: LiveData<Boolean> = Transformations.map(_unitType) { it == CELSIUS }
 
@@ -51,14 +49,16 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-    private fun fetchWeatherData(searchType: Int) = onMainContext {
+    private fun fetchWeatherData(searchType: Int, cityName: String = "") = onMainContext {
         log("fetchWeatherData")
         try {
             _searchState.toNew(SearchState.SEARCHING)
 
             when (searchType) {
                 USE_LOCATION ->
-                    repository.useLocationToFetchReport(savedLocation, savedUnitType, language)
+                    repository.useLocationToFetchReport()
+                USE_CITY_NAME ->
+                    repository.useCityNameToFetchReport(cityName)
             }
             _searchState.toNew(SearchState.SUCCEEDED)
         } catch (e: HttpException) {
