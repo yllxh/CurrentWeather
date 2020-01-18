@@ -14,7 +14,7 @@ import com.yllxh.currentweather.data.reports.WeekReport
 import com.yllxh.currentweather.utils.*
 import retrofit2.HttpException
 
-class MainViewModel(app: Application) : AndroidViewModel(app), NetworkStateListener {
+class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     private val isSavedLocationValid get() = isValidLocationSaved(getApplication())
     private val savedLocation get() = getLastSavedLocation(getApplication())
@@ -42,7 +42,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app), NetworkStateListe
     private val _searchState = MutableLiveData<SearchState>()
     val searchState: LiveData<SearchState> get() = _searchState
 
-    private val networkAlerter = NetworkAlerter(this, getApplication())
+    private val networkAlerter = NetworkAlerter(getApplication()){ _isConnected.toNew(it) }
 
     fun getTodaysWeatherReport() {
         _searchState.toNew(SearchState.SEARCHING)
@@ -75,14 +75,6 @@ class MainViewModel(app: Application) : AndroidViewModel(app), NetworkStateListe
         log(weekReport.toString())
         _todaysReport.to(todaysReport)
         _weekReport.to(weekReport)
-    }
-
-    override fun onNetworkStateChanged(state: NetworkState) {
-        val isConnected: Boolean = when (state) {
-            NetworkState.AVAILABLE -> true
-            NetworkState.LOST -> false
-        }
-        _isConnected.toNew(isConnected)
     }
 
     fun onLocationRetrieved(location: Location) {

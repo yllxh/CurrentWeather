@@ -7,22 +7,16 @@ import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.os.Build
 
-enum class NetworkState { AVAILABLE, LOST }
-
-interface NetworkStateListener {
-    fun onNetworkStateChanged(state: NetworkState)
-}
-
 class NetworkAlerter (
-    private val listener: NetworkStateListener,
-    private val context: Context
+    private val context: Context,
+    private val onStateChanged: (Boolean) -> Unit
 ) {
 
     private lateinit var networkCallback: ConnectivityManager.NetworkCallback
     private var connectivityManager: ConnectivityManager = getConnectivityManager()
 
     init {
-        listener.onNetworkStateChanged(checkNetworkState())
+        onStateChanged(checkNetworkState())
         initNetworkCallback()
         registerNetworkCallback()
     }
@@ -40,16 +34,12 @@ class NetworkAlerter (
         networkCallback = object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
                 super.onAvailable(network)
-                listener.onNetworkStateChanged(
-                    hasValidCapabilities(network)
-                )
+                onStateChanged(hasValidCapabilities(network))
             }
 
             override fun onLost(network: Network) {
                 super.onLost(network)
-                listener.onNetworkStateChanged(
-                    hasValidCapabilities(network)
-                )
+                onStateChanged(hasValidCapabilities(network))
             }
         }
     }
@@ -57,22 +47,22 @@ class NetworkAlerter (
     private fun getConnectivityManager() =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-    private fun checkNetworkState(): NetworkState {
+    private fun checkNetworkState(): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val network = connectivityManager.activeNetwork ?: return NetworkState.LOST
+            val network = connectivityManager.activeNetwork ?: return false
             return hasValidCapabilities(network)
         } else {
-            val nwInfo = connectivityManager.activeNetworkInfo ?: return NetworkState.LOST
-            return if (nwInfo.isConnected) NetworkState.AVAILABLE else NetworkState.LOST
+            val nwInfo = connectivityManager.activeNetworkInfo ?: return false
+            return nwInfo.isConnected
         }
     }
 
-    private fun hasValidCapabilities(network: Network): NetworkState {
-        val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return NetworkState.LOST
+    private fun hasValidCapabilities(network: Network): Boolean {
+        val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
         return when {
-            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> NetworkState.AVAILABLE
-            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> NetworkState.AVAILABLE
-            else -> NetworkState.LOST
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            else -> true
         }
     }
 }
