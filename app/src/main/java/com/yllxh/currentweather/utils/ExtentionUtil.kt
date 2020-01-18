@@ -50,12 +50,15 @@ fun <T> MutableLiveData<T>.to(newValue: T) {
  * Old values are skip.
  *
  * @param newValue  A new value for this MutableLiveData.
+ *
+ * @return  Returns true if the value is saved, false otherwise.
  */
-fun <T> MutableLiveData<T>.toNew(newValue: T) {
+fun <T> MutableLiveData<T>.toNew(newValue: T): Boolean {
     if (value == newValue)
-        return
+        return false
 
     to(newValue)
+    return true
 }
 
 fun LiveData<SearchState>.isMissingPermission(): Boolean {

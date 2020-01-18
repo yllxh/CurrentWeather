@@ -2,10 +2,13 @@ package com.yllxh.currentweather.viewmodels
 
 import android.app.Application
 import android.location.Location
+import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.yllxh.currentweather.AppRepository
+import com.yllxh.currentweather.R
 import com.yllxh.currentweather.data.reports.TodaysReport
 import com.yllxh.currentweather.data.reports.WeekReport
 import com.yllxh.currentweather.utils.*
@@ -15,7 +18,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app), NetworkAlerter.Ne
 
     private val isSavedLocationValid get() = isValidLocationSaved(getApplication())
     private val savedLocation get() = getLastSavedLocation(getApplication())
-    private val unitType get() = getUnitType(getApplication())
+    private val savedUnitType get() = getUnitType(getApplication())
     private val language get() = getSavedUILanguage(getApplication())
 
     private val repository = AppRepository()
@@ -23,9 +26,12 @@ class MainViewModel(app: Application) : AndroidViewModel(app), NetworkAlerter.Ne
     private val _todaysReport = MutableLiveData<TodaysReport>()
     val todaysReport: LiveData<TodaysReport> get() = _todaysReport
 
-
     private val _weekReport = MutableLiveData<WeekReport>()
     val weekReport: LiveData<WeekReport> get() = _weekReport
+
+    private val _unitType = MutableLiveData<String>(savedUnitType)
+
+    val isCelsiusSelected: LiveData<Boolean> = Transformations.map(_unitType) { it == CELSIUS }
 
     private val _isConnected = MutableLiveData<Boolean>()
     val isConnected: LiveData<Boolean> get() = _isConnected
@@ -51,10 +57,10 @@ class MainViewModel(app: Application) : AndroidViewModel(app), NetworkAlerter.Ne
             _searchState.toNew(SearchState.SEARCHING)
 
             val todaysReportAsync =
-                repository.fetchTodaysReportForLocationAsync(savedLocation, unitType, language)
+                repository.fetchTodaysReportForLocationAsync(savedLocation, savedUnitType, language)
 
             val weekReportAsync =
-                repository.fetchWeekReportForLocationAsync(savedLocation, unitType, language)
+                repository.fetchWeekReportForLocationAsync(savedLocation, savedUnitType, language)
 
             updateReports(todaysReportAsync.await(), weekReportAsync.await())
 
@@ -100,6 +106,19 @@ class MainViewModel(app: Application) : AndroidViewModel(app), NetworkAlerter.Ne
     fun onNotConnectedDialogDismissed() {
         if (isConnected.isFalse()) {
             _isConnected.toSelf()
+        }
+    }
+
+    fun onUnitTypeClicked(view: View) {
+        val newUnitType = when (view.id) {
+            R.id.celsius_button -> CELSIUS
+            else -> FAHRENHEIT
+        }
+        val isSaved = _unitType.toNew(newUnitType)
+
+        if (isSaved) {
+            setUnitType(getApplication(), newUnitType)
+            getTodaysWeatherReport()
         }
     }
 

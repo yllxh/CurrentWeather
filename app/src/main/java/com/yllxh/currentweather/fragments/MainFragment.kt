@@ -14,7 +14,6 @@ import com.yllxh.currentweather.viewmodels.MainViewModel
 import com.yllxh.currentweather.dialogs.NotConnectedDialog
 import com.yllxh.currentweather.R
 import com.yllxh.currentweather.adapters.NextHoursReportAdapter
-import com.yllxh.currentweather.data.reports.HourReport
 import com.yllxh.currentweather.data.reports.Report
 import com.yllxh.currentweather.databinding.FragmentMainBinding
 import com.yllxh.currentweather.dialogs.DetailsDialog
@@ -36,8 +35,8 @@ class MainFragment : Fragment() {
     ): View? {
         binding = FragmentMainBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
-        binding.viewModel = viewModel
 
+        binding.viewModel = viewModel
         binding.nextHoursRecycleView.adapter = NextHoursReportAdapter { showDetailsDialog(it) }
 
         observeLiveData()

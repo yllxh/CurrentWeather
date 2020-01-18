@@ -162,15 +162,19 @@
                 android:id="@+id/celsius_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:checked="@{viewModel.isCelsiusSelected()}"
                 android:enabled="@{viewModel.isConnected()}"
+                android:onClick="@{(v) -> viewModel.onUnitTypeClicked(v)}"
                 android:text="@string/celsius_symbol"
                 android:textSize="16sp" />
 
             <RadioButton
-                android:id="@+id/radioButton"
+                android:id="@+id/fahrenheit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:checked="@{!viewModel.isCelsiusSelected()}"
                 android:enabled="@{viewModel.isConnected()}"
+                android:onClick="@{(v) -> viewModel.onUnitTypeClicked(v)}"
                 android:text="@string/fahrenheit_symbol"
                 android:textSize="16sp" />
         </RadioGroup>
