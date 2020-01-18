@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.os.Parcelable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,8 @@ import com.yllxh.currentweather.viewmodels.MainViewModel
 import com.yllxh.currentweather.dialogs.NotConnectedDialog
 import com.yllxh.currentweather.R
 import com.yllxh.currentweather.adapters.NextHoursReportAdapter
+import com.yllxh.currentweather.data.reports.HourReport
+import com.yllxh.currentweather.data.reports.Report
 import com.yllxh.currentweather.databinding.FragmentMainBinding
 import com.yllxh.currentweather.dialogs.DetailsDialog
 import com.yllxh.currentweather.utils.*
@@ -35,21 +38,29 @@ class MainFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        binding.nextHoursRecycleView.adapter = NextHoursReportAdapter {
-                DetailsDialog.newInstance(it)
-                    .show(requireFragmentManager(), DetailsDialog.TAG)
-            }
+        binding.nextHoursRecycleView.adapter = NextHoursReportAdapter { showDetailsDialog(it) }
 
         observeLiveData()
         setOnClickListeners()
         return binding.root
     }
 
+    private fun <T> showDetailsDialog(report: T?) where T: Report, T: Parcelable{
+        report?.let {
+            DetailsDialog.newInstance(report)
+                .show(requireFragmentManager(), DetailsDialog.TAG)
+        }
+    }
+
     private fun setOnClickListeners() {
-        binding.dailyForecastButton.setOnClickListener {
-            viewModel.weekReport.value?.let {
-                findNavController().navigate(toForecastFragment(it))
+        binding.apply {
+            dailyForecastButton.setOnClickListener {
+                viewModel?.weekReport?.value?.let {
+                    findNavController().navigate(toForecastFragment(it))
+                }
             }
+
+            detailsButton.setOnClickListener { showDetailsDialog(viewModel?.todaysReport?.value)}
         }
     }
 
