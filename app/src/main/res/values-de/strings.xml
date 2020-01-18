@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Wetter</string>
+
+    <string name="pressure">Luftdruck: %1$s hPa</string>
+    <string name="humidity">Feuchtigkeit: %1$s %%</string>
+    <string name="cloudiness">Wolken: %1$s %%</string>
+    <string name="feels_temp">Fühlt sich: %1$.0f°</string>
+    <string name="wind_degree">Windgrad: %1$d°</string>
+    <string name="wind_speed_metric">Geschwindigkeit: %1$.1f m/s</string>
+    <string name="temp_min_max_feels"> %1$.1f°/%2$.1f°\Fühlt sich: %3$.0f°</string>
+    <string name="wind_speed_imperial">Geschwindigkeit: %1$.1f mi/h</string>
+
+    <string name="cancel">Abbrechen</string>
+    <string name="search">Suche</string>
+    <string name="details">Einzelheiten</string>
+    <string name="dismiss">Entlassen</string>
+    <string name="search_failed">Suche fehlgeschlagen.</string>
+    <string name="daily_forecast">Tägliche Vorhersage</string>
+    <string name="enter_city_name">Schreibe den Namen der Stadt</string>
+    <string name="location_not_found">Standort konnte nicht gefunden werden.</string>
+    <string name="enter_city_name_hint">z.B. berlin, istanbul</string>
+    <string name="search_button_description">Suchen Sie einen Ort nach Namen.</string>
+    <string name="my_location_button_description">Erhalten Sie Wetterinformationen für Ihren Standort.</string>
+    <string name="location_permission_denied_permanently">Standorterlaubnis wird STÄNDIG verweigert.</string>
+    <string name="select_language">Wähle eine Sprache</string>
+    <string name="ok">In Ordnung</string>
+    <string name="next_24_hours">Nächste 24 Stunden</string>
+
+    <string name="internet_required">Internetverbindung ist erforderlich</string>
+    <string name="internet_required_message">Die App benötigt einen Internetzugang, um Wetterdaten zu erhalten.</string>
+    <string name="location_permission_denied">Standorterlaubnis verweigert</string>
+</resources>

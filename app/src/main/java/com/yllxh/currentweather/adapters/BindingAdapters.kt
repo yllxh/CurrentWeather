@@ -51,11 +51,32 @@ fun TextView.setWindSpeedText(report: Report?) {
     }
 }
 
-
-@BindingAdapter("report_day_abbreviated")
-fun TextView.setReportDayAbbreviated(report: Report?) {
+@BindingAdapter("report_dateOfDay")
+fun TextView.setDateFromSeconds(report: Report?) {
     report?.let {
-        text = translateDayAbbreviated(context, report.day)
+        text = fromSecondsToDateStamp(report.timeInSeconds)
+    }
+}
+
+@BindingAdapter("report_icon")
+fun ImageView.setWeatherIcon(report: Report?) {
+    report?.apply {
+        val drawable = ContextCompat.getDrawable(
+            context,
+            getWeatherIconId(context, icon)
+        )
+        setImageDrawable(drawable)
+    }
+}
+
+@BindingAdapter("report_description")
+fun TextView.setReportDescription(report: Report?) {
+    report?.let {
+        text = if(isTranslationProvidedByApi(context)){
+            it.description.capitalize()
+        } else {
+            getDescriptionFromWeatherId(context, it.weatherId).capitalize()
+        }
     }
 }
 
@@ -66,6 +87,7 @@ fun TextView.setReportHour(report: Report?) {
     }
 }
 
+
 @BindingAdapter("report_day")
 fun TextView.setReportDay(report: Report?) {
     report?.let {
@@ -73,39 +95,20 @@ fun TextView.setReportDay(report: Report?) {
     }
 }
 
-@BindingAdapter("report_description")
-fun TextView.setReportDescription(report: Report?) {
+@BindingAdapter("report_day_abbreviated")
+fun TextView.setReportDayAbbreviated(report: Report?) {
     report?.let {
-        text =
-            getDescriptionFromWeatherId(context, it.weatherId).capitalize()
+        text = translateDayAbbreviated(context, report.day)
     }
 }
-
-@BindingAdapter("report_dateOfDay")
-fun TextView.setDateFromSeconds(report: Report?) {
-    report?.let {
-        text = fromSecondsToDateStamp(report.timeInSeconds)
-    }
-}
-
 
 @BindingAdapter("report_contentDescription")
 fun ImageView.setReportContentDescription(report: Report?) {
     report?.let {
-        contentDescription =
+        contentDescription = if (isTranslationProvidedByApi(context)) {
+            it.description.capitalize()
+        } else {
             getDescriptionFromWeatherId(context, it.weatherId)
-
-    }
-}
-
-
-@BindingAdapter("report_icon")
-fun ImageView.setWeatherIcon(report: Report?) {
-    report?.apply {
-        val drawable = ContextCompat.getDrawable(
-            context,
-            getWeatherIconId(context, icon)
-        )
-        setImageDrawable(drawable)
+        }
     }
 }

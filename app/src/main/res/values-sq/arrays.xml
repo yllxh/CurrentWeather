@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="days">
+        <item>E Hënë</item>
+        <item>E Martë</item>
+        <item>E Mërkurë</item>
+        <item>E Enjte</item>
+        <item>E Premte</item>
+        <item>E Shtunë</item>
+        <item>E Diel</item>
+    </string-array>
+    <string-array name="days_abbreviated">
+        <item>Hën</item>
+        <item>Mar</item>
+        <item>Mër</item>
+        <item>Enj</item>
+        <item>Pre</item>
+        <item>Shtu</item>
+        <item>Die</item>
+    </string-array>
+</resources>
