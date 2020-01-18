@@ -1,4 +1,4 @@
-package com.yllxh.currentweather.data
+package com.yllxh.currentweather.data.json_models
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

@@ -3,7 +3,7 @@ package com.yllxh.currentweather.data.reports
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import com.yllxh.currentweather.data.*
+import com.yllxh.currentweather.data.json_models.*
 import com.yllxh.currentweather.utils.fromSecondsToDayIndex
 import kotlinx.android.parcel.Parcelize
 

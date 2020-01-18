@@ -3,7 +3,7 @@ package com.yllxh.currentweather.utils
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
-import com.yllxh.currentweather.data.LatLng
+import com.yllxh.currentweather.data.json_models.LatLng
 import java.util.*
 
 const val CITY_NOT_SET = "not_set"

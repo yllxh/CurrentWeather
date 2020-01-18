@@ -9,10 +9,8 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
-import com.yllxh.currentweather.data.LatLng
-import com.yllxh.currentweather.data.reports.DayReport
+import com.yllxh.currentweather.data.json_models.LatLng
 import com.yllxh.currentweather.data.reports.Report
-import com.yllxh.currentweather.data.reports.WeekReport
 import com.yllxh.currentweather.dialogs.DetailsDialog
 import com.yllxh.currentweather.dialogs.NotConnectedDialog
 import com.yllxh.currentweather.fragments.MainFragment

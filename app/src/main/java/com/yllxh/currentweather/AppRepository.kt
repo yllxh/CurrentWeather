@@ -1,6 +1,6 @@
 package com.yllxh.currentweather
 
-import com.yllxh.currentweather.data.LatLng
+import com.yllxh.currentweather.data.json_models.LatLng
 import com.yllxh.currentweather.data.remote.WeatherApi
 import com.yllxh.currentweather.data.reports.TodaysReport
 import com.yllxh.currentweather.data.reports.WeekReport
