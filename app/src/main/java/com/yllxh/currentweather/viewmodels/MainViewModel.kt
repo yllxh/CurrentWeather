@@ -14,6 +14,8 @@ import com.yllxh.currentweather.data.reports.WeekReport
 import com.yllxh.currentweather.utils.*
 import retrofit2.HttpException
 
+const val USE_LOCATION = 0
+
 class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     private val isSavedLocationValid get() = isValidLocationSaved(getApplication())
@@ -23,11 +25,8 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     private val repository = AppRepository()
 
-    private val _todaysReport = MutableLiveData<TodaysReport>()
-    val todaysReport: LiveData<TodaysReport> get() = _todaysReport
-
-    private val _weekReport = MutableLiveData<WeekReport>()
-    val weekReport: LiveData<WeekReport> get() = _weekReport
+    val todaysReport: LiveData<TodaysReport> get() = repository.todaysReport
+    val weekReport: LiveData<WeekReport> get() = repository.weekReport
 
     private val _unitType = MutableLiveData<String>(savedUnitType)
 
@@ -47,35 +46,27 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     fun getTodaysWeatherReport() {
         _searchState.toNew(SearchState.SEARCHING)
         when {
-            isSavedLocationValid -> useLocationToGetReport()
+            isSavedLocationValid -> fetchWeatherData(USE_LOCATION)
             else -> _isLocationRequested.to(true)
         }
     }
 
-    private fun useLocationToGetReport() = onMainContext {
+    private fun fetchWeatherData(searchType: Int) = onMainContext {
+        log("fetchWeatherData")
         try {
             _searchState.toNew(SearchState.SEARCHING)
 
-            val todaysReportAsync =
-                repository.fetchTodaysReportForLocationAsync(savedLocation, savedUnitType, language)
-
-            val weekReportAsync =
-                repository.fetchWeekReportForLocationAsync(savedLocation, savedUnitType, language)
-
-            updateReports(todaysReportAsync.await(), weekReportAsync.await())
-
+            when (searchType) {
+                USE_LOCATION ->
+                    repository.useLocationToFetchReport(savedLocation, savedUnitType, language)
+            }
             _searchState.toNew(SearchState.SUCCEEDED)
-
         } catch (e: HttpException) {
             _searchState.toNew(SearchState.FAILED)
         }
     }
 
-    private fun updateReports(todaysReport: TodaysReport, weekReport: WeekReport) {
-        log(weekReport.toString())
-        _todaysReport.to(todaysReport)
-        _weekReport.to(weekReport)
-    }
+
 
     fun onLocationRetrieved(location: Location) {
         _isLocationRequested.to(false)
@@ -83,7 +74,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         setLastLocation(getApplication(), location.toLatLng())
 
         if (_isConnected.isTrue()) {
-            useLocationToGetReport()
+            fetchWeatherData(USE_LOCATION)
         }
     }
 
