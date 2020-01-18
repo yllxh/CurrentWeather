@@ -50,23 +50,18 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     private fun fetchWeatherData(searchType: Int, cityName: String = "") = onMainContext {
-        log("fetchWeatherData")
         try {
             _searchState.toNew(SearchState.SEARCHING)
 
             when (searchType) {
-                USE_LOCATION ->
-                    repository.useLocationToFetchReport()
-                USE_CITY_NAME ->
-                    repository.useCityNameToFetchReport(cityName)
+                USE_LOCATION -> repository.useLocationToFetchReport()
+                USE_CITY_NAME -> repository.useCityNameToFetchReport(cityName)
             }
             _searchState.toNew(SearchState.SUCCEEDED)
         } catch (e: HttpException) {
             _searchState.toNew(SearchState.FAILED)
         }
     }
-
-
 
     fun onLocationRetrieved(location: Location) {
         _isLocationRequested.to(false)

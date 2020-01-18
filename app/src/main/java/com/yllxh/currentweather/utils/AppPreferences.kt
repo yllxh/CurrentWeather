@@ -63,15 +63,9 @@ fun isValidLocationSaved(context: Context): Boolean {
 fun getUnitType(context: Context): String {
     val preferences = PreferenceManager.getDefaultSharedPreferences(context)
     return if (preferences.contains(UNIT_TYPE_KEY)) {
-        preferences.getString(
-            UNIT_TYPE_KEY,
-            DEFAULT_UNIT_TYPE
-        )!!
+        preferences.getString(UNIT_TYPE_KEY, DEFAULT_UNIT_TYPE)!!
     } else {
-        setUnitType(
-            context,
-            DEFAULT_UNIT_TYPE
-        )
+        setUnitType(context, DEFAULT_UNIT_TYPE)
         DEFAULT_UNIT_TYPE
     }
 }
@@ -88,15 +82,9 @@ fun setUnitType(context: Context, unitType: String) {
 fun getCityName(context: Context): String {
     val preferences = PreferenceManager.getDefaultSharedPreferences(context)
     return if (preferences.contains(CITY_NAME_KEY)) {
-        preferences.getString(
-            CITY_NAME_KEY,
-            CITY_NOT_SET
-        )!!
+        preferences.getString(CITY_NAME_KEY, CITY_NOT_SET)!!
     } else {
-        setCityName(
-            context,
-            CITY_NOT_SET
-        )
+        setCityName(context, CITY_NOT_SET)
         CITY_NOT_SET
     }
 }

@@ -38,10 +38,10 @@ interface WeatherApiService {
     ): Deferred<TodaysReport>
 
     @GET("data/2.5/forecast")
-    fun getWeekReportUsingCityName(@Query("q") cityName: String,
-                                   @Query("units") unitType: String? = DEFAULT_UNIT_TYPE,
-                                   @Query("lang") lang: String? = DEFAULT_LANGUAGE,
-                                   @Query("appid") api:String = WEATHER_API_KEY
+    fun getWeekReportUsingCityNameAsync(@Query("q") cityName: String,
+                                        @Query("units") unitType: String? = DEFAULT_UNIT_TYPE,
+                                        @Query("lang") lang: String? = DEFAULT_LANGUAGE,
+                                        @Query("appid") api:String = WEATHER_API_KEY
     ): Deferred<WeekReport>
 
     @GET("data/2.5/forecast")

@@ -27,16 +27,25 @@ class AppRepository(private val context: Context) {
         return withContext(Dispatchers.IO) {
                 return@withContext WeatherApi
                     .weatherApiService
-                    .getReportFromLocationAsync(savedLocation.lat, savedLocation.lng, savedUnitType, language)
+                    .getReportFromLocationAsync(
+                        savedLocation.lat,
+                        savedLocation.lng,
+                        savedUnitType,
+                        language
+                    )
         }
     }
-
 
     private suspend fun fetchWeekReportUsingLocationAsync(): Deferred<WeekReport> {
         return withContext(Dispatchers.IO) {
                 return@withContext WeatherApi
                     .weatherApiService
-                    .getWeekReportFromLocationAsync(savedLocation.lat, savedLocation.lng, savedUnitType, language)
+                    .getWeekReportFromLocationAsync(
+                        savedLocation.lat,
+                        savedLocation.lng,
+                        savedUnitType,
+                        language
+                    )
         }
     }
 
@@ -53,11 +62,9 @@ class AppRepository(private val context: Context) {
         return withContext(Dispatchers.IO) {
             return@withContext WeatherApi
                 .weatherApiService
-                .getWeekReportUsingCityName(cityName, savedUnitType, language)
+                .getWeekReportUsingCityNameAsync(cityName, savedUnitType, language)
         }
     }
-
-
 
     suspend fun useLocationToFetchReport() {
         val todaysReportAsync =
@@ -69,9 +76,7 @@ class AppRepository(private val context: Context) {
         updateReports(todaysReportAsync.await(), weekReportAsync.await())
     }
 
-
     suspend fun useCityNameToFetchReport(cityName: String) {
-        log("useCityNameToFetchReport")
 
         val todaysReportAsync =
             fetchTodaysReportUsingCityNameAsync(cityName)
@@ -91,5 +96,4 @@ class AppRepository(private val context: Context) {
         _todaysReport.to(todaysReport)
         _weekReport.to(weekReport)
     }
-
 }

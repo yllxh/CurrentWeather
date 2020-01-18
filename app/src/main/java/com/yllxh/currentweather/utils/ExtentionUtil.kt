@@ -41,7 +41,6 @@ fun <T> Fragment.showDetailsDialog(report: T?) where T: Report, T: Parcelable {
     }
 }
 
-
 fun MainFragment.onNotConnected() {
     NotConnectedDialog.newInstance(this)
         .show(requireFragmentManager(), NotConnectedDialog.TAG)
@@ -59,7 +58,6 @@ fun <T> MutableLiveData<T>.to(newValue: T) {
         postValue(newValue)
     }
 }
-
 
 /**
  * Saves new value to this MutableLiveData.
@@ -118,13 +116,11 @@ fun ViewModel.onIOContext(block : suspend () -> Unit) {
     }
 }
 
-
 fun DialogFragment.createAlertDialog(binding: ViewDataBinding): AlertDialog {
     return AlertDialog.Builder(binding.root.context)
         .setView(binding.root)
         .create()
 }
-
 
 fun Fragment.toast(ms: String, length: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(requireContext(), ms, length).show()
