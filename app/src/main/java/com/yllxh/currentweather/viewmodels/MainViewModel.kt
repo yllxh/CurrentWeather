@@ -108,4 +108,11 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         super.onCleared()
         networkAlerter.stopListening()
     }
+
+    fun onSearchCityDismissed(cityName: String) {
+        if (cityName.isNotBlank()) {
+            fetchWeatherData(USE_CITY_NAME, cityName)
+            return
+        }
+    }
 }

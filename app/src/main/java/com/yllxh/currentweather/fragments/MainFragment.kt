@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.os.Parcelable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +13,8 @@ import com.yllxh.currentweather.viewmodels.MainViewModel
 import com.yllxh.currentweather.dialogs.NotConnectedDialog
 import com.yllxh.currentweather.R
 import com.yllxh.currentweather.adapters.NextHoursReportAdapter
-import com.yllxh.currentweather.data.reports.Report
 import com.yllxh.currentweather.databinding.FragmentMainBinding
-import com.yllxh.currentweather.dialogs.DetailsDialog
+import com.yllxh.currentweather.dialogs.SearchCityDialog
 import com.yllxh.currentweather.utils.*
 import com.yllxh.currentweather.fragments.MainFragmentDirections.actionMainFragmentToForecastFragment as toForecastFragment
 
@@ -48,13 +46,11 @@ class MainFragment : Fragment() {
     private fun setOnClickListeners() {
         with(binding) {
 
-            dailyForecastButton.setOnClickListener {
-                viewModel?.weekReport?.value?.let {
-                    findNavController().navigate(toForecastFragment(it))
-                }
-            }
+            dailyForecastButton.setOnClickListener { navigateToForecastFragment()}
 
             detailsButton.setOnClickListener { showDetailsDialog(viewModel?.todaysReport?.value)}
+
+            searchButton.setOnClickListener { showSearchDialog() }
         }
     }
 
@@ -78,9 +74,11 @@ class MainFragment : Fragment() {
                     return@observe
 
                 if (hasLocationPermission) {
-                    getCurrentLocation()
+                    LocationRetriever(requireContext()) {
+                        viewModel.onLocationRetrieved(it)
+                    }
                 } else {
-                    requestLocationPermission()
+                    requestLocationPermission(this@MainFragment)
                 }
             }
 
@@ -95,15 +93,6 @@ class MainFragment : Fragment() {
             else -> return
         }
     }
-
-    private fun getCurrentLocation() {
-        LocationRetriever(requireContext()) {
-            viewModel.onLocationRetrieved(it)
-        }
-    }
-
-    private fun requestLocationPermission() =
-        requestLocationPermission(this, LOCATION_PERMISSION_REQUEST)
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -128,8 +117,21 @@ class MainFragment : Fragment() {
 
         when (requestCode) {
             NotConnectedDialog.NOT_CONNECTED_DIALOG_REQUEST -> viewModel.onNotConnectedDialogDismissed()
+            SearchCityDialog.SEARCH_CITY_DIALOG_REQUEST -> {
+                val cityName = data?.getStringExtra(SearchCityDialog.SEARCHED_CITY_NAME_KEY) ?: ""
+                viewModel.onSearchCityDismissed(cityName)
+            }
         }
+    }
 
+    private fun navigateToForecastFragment() {
+        viewModel.weekReport.value?.let {
+            findNavController().navigate(toForecastFragment(it))
+        }
+    }
+    private fun showSearchDialog() {
+        SearchCityDialog.newInstance(this)
+            .show(requireFragmentManager(), SearchCityDialog.TAG)
     }
 }
 

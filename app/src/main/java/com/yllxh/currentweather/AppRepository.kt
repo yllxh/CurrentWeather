@@ -85,15 +85,15 @@ class AppRepository(private val context: Context) {
             fetchWeekReportUsingCityNameAsync(cityName)
 
         updateReports(todaysReportAsync.await(), weekReportAsync.await())
-
-        weekReport.value?.let {
-            val latLng = it.city.latLng
-            setLastLocation(context, latLng)
-        }
     }
 
     private fun updateReports(todaysReport: TodaysReport, weekReport: WeekReport) {
         _todaysReport.to(todaysReport)
         _weekReport.to(weekReport)
+
+        todaysReport.let {
+            val latLng = it.latLng
+            setLastLocation(context, latLng)
+        }
     }
 }

@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 
 const val LOCATION_PERMISSION_REQUEST = 123
 
-fun requestLocationPermission(fragment: Fragment, requestCode: Int) {
-    fragment.requestPermissions(arrayOf(ACCESS_FINE_LOCATION), requestCode)
+fun requestLocationPermission(fragment: Fragment) {
+    fragment.requestPermissions(arrayOf(ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST)
 }
 
 fun hasLocationPermission(context: Context): Boolean =
