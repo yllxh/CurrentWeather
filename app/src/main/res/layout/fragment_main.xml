@@ -126,6 +126,7 @@
             android:id="@+id/daily_forecast_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:enabled="@{viewModel.isConnected()}"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="24dp"
             android:background="@android:color/transparent"
@@ -161,6 +162,7 @@
                 android:id="@+id/celsius_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="@{viewModel.isConnected()}"
                 android:text="@string/celsius_symbol"
                 android:textSize="16sp" />
 
@@ -168,6 +170,7 @@
                 android:id="@+id/radioButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="@{viewModel.isConnected()}"
                 android:text="@string/fahrenheit_symbol"
                 android:textSize="16sp" />
         </RadioGroup>
@@ -176,6 +179,7 @@
             android:id="@+id/myLocationButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:enabled="@{viewModel.isConnected()}"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="32dp"
             android:background="@android:color/transparent"
@@ -191,6 +195,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:enabled="@{viewModel.isConnected()}"
             android:background="@android:color/transparent"
             android:contentDescription="@string/search_button_description"
             app:layout_constraintEnd_toEndOf="@+id/myLocationButton"
