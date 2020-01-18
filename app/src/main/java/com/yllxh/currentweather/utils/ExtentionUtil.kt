@@ -1,6 +1,7 @@
 package com.yllxh.currentweather.utils
 
 import android.location.Location
+import android.os.Parcelable
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -12,6 +13,9 @@ import com.yllxh.currentweather.data.LatLng
 import com.yllxh.currentweather.data.reports.DayReport
 import com.yllxh.currentweather.data.reports.Report
 import com.yllxh.currentweather.data.reports.WeekReport
+import com.yllxh.currentweather.dialogs.DetailsDialog
+import com.yllxh.currentweather.dialogs.NotConnectedDialog
+import com.yllxh.currentweather.fragments.MainFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -30,6 +34,20 @@ fun <T> MutableLiveData<T>.toSelf() {
     value = value
 }
 
+
+
+fun <T> Fragment.showDetailsDialog(report: T?) where T: Report, T: Parcelable {
+    report?.let {
+        DetailsDialog.newInstance(report)
+            .show(requireFragmentManager(), DetailsDialog.TAG)
+    }
+}
+
+
+fun MainFragment.onNotConnected() {
+    NotConnectedDialog.newInstance(this)
+        .show(requireFragmentManager(), NotConnectedDialog.TAG)
+}
 
 /**
  * Saves new value to this MutableLiveData.

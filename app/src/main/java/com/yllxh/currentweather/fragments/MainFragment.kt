@@ -44,15 +44,10 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
-    private fun <T> showDetailsDialog(report: T?) where T: Report, T: Parcelable{
-        report?.let {
-            DetailsDialog.newInstance(report)
-                .show(requireFragmentManager(), DetailsDialog.TAG)
-        }
-    }
 
     private fun setOnClickListeners() {
-        binding.apply {
+        with(binding) {
+
             dailyForecastButton.setOnClickListener {
                 viewModel?.weekReport?.value?.let {
                     findNavController().navigate(toForecastFragment(it))
@@ -69,10 +64,12 @@ class MainFragment : Fragment() {
             observe(todaysReport) { binding.report = it }
 
             observe(isConnected) {
-                if (it) {
-                    getTodaysWeatherReport()
-                } else if (!searchState.isSuccessful()){
-                    onNotConnected()
+                if (searchState.isSuccessful())
+                    return@observe
+
+                when {
+                    it -> getTodaysWeatherReport()
+                    !searchState.isSuccessful() -> onNotConnected()
                 }
             }
 
@@ -97,13 +94,6 @@ class MainFragment : Fragment() {
             SearchState.MISSING_LOCATION_PERMISSION -> toast(getString(R.string.location_permission_denied))
             else -> return
         }
-    }
-
-    private fun onNotConnected() {
-        NotConnectedDialog.newInstance(this)
-            .show(requireFragmentManager(),
-                NotConnectedDialog.TAG
-            )
     }
 
     private fun getCurrentLocation() {
