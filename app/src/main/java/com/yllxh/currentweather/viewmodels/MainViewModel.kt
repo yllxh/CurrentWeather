@@ -14,7 +14,7 @@ import com.yllxh.currentweather.data.reports.WeekReport
 import com.yllxh.currentweather.utils.*
 import retrofit2.HttpException
 
-class MainViewModel(app: Application) : AndroidViewModel(app), NetworkAlerter.NetworkStateListener {
+class MainViewModel(app: Application) : AndroidViewModel(app), NetworkStateListener {
 
     private val isSavedLocationValid get() = isValidLocationSaved(getApplication())
     private val savedLocation get() = getLastSavedLocation(getApplication())
