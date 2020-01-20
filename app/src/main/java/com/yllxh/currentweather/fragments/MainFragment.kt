@@ -60,12 +60,12 @@ class MainFragment : Fragment() {
             observe(todaysReport) { binding.report = it }
 
             observe(isConnected) {
-                if (searchState.isSuccessful())
+                if (searchState.holds(SearchState.SUCCEEDED))
                     return@observe
 
                 when {
                     it -> getTodaysWeatherReport()
-                    !searchState.isSuccessful() -> onNotConnected()
+                    !searchState.holds(SearchState.SUCCEEDED) -> onNotConnected()
                 }
             }
 

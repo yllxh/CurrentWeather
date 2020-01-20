@@ -20,8 +20,8 @@ import kotlinx.coroutines.withContext
 import java.lang.IllegalStateException
 
 /**
- * Extension function for the LifecycleOwner class, to allow them to
- * observe LiveData with a more readable syntax.
+ * Extension function for the [LifecycleOwner] class, to allow them to
+ * observe [LiveData] with a more readable syntax.
  *
  * @param liveData          The LiveData which is to be observed.
  * @param lifecycleOwner    LifecycleOwner which is passed to the LiveData as the LifecycleOwner.
@@ -36,14 +36,14 @@ fun <T> LifecycleOwner.observe(
 }
 
 /**
- * Function used to reassign the same value to this MutableLiveData.
+ * Function used to reassign the same value to this [MutableLiveData].
  */
 fun <T> MutableLiveData<T>.toSelf() {
     value = value
 }
 
 /**
- * Saves new value to this MutableLiveData.
+ * Saves new value to this [MutableLiveData].
  *
  * @param newValue  A new value for this MutableLiveData.
  */
@@ -56,7 +56,7 @@ fun <T> MutableLiveData<T>.to(newValue: T) {
 }
 
 /**
- * Saves new value to this MutableLiveData.
+ * Saves new value to this [MutableLiveData].
  * Old values are skip.
  *
  * @param newValue  A new value for this MutableLiveData.
@@ -71,29 +71,36 @@ fun <T> MutableLiveData<T>.toNew(newValue: T): Boolean {
     return true
 }
 
-fun LiveData<SearchState>.isMissingPermission(): Boolean {
-    return value == SearchState.MISSING_LOCATION_PERMISSION
-}
-
+/**
+ * Extension function that allows better readability of [Boolean] values of
+ * this [LiveData] objects
+ *
+ * @return Returns true if the stored value is true, false otherwise.
+ */
 fun LiveData<Boolean>.isTrue(): Boolean {
     return value == true
 }
 
+/**
+ * Extension function that allows better readability of boolean values of
+ * this [LiveData] objects.
+ *
+ * @return Returns false if the stored value is false, true otherwise.
+ */
 fun LiveData<Boolean>.isFalse(): Boolean {
     return value == false
 }
 
-
-fun LiveData<SearchState>.isSearching(): Boolean {
-    return value == SearchState.SEARCHING
-}
-
-fun LiveData<SearchState>.isSuccessful(): Boolean {
-    return value == SearchState.SUCCEEDED
-}
-
-fun LiveData<SearchState>.isFailed(): Boolean {
-    return value == SearchState.FAILED
+/**
+ * Extension function allows the comparisons of the stored value
+ * to the value with is passed as a parameter.
+ *
+ * @param value The value to be compared to the stored value.
+ *
+ * @return Returns true if the values are the same, false otherwise.
+ */
+fun <T> LiveData<T>.holds(value: T): Boolean {
+    return this.value == value
 }
 
 /**
@@ -131,7 +138,7 @@ fun createAlertDialog(binding: ViewDataBinding): AlertDialog {
 }
 
 /**
- * Function that show a Toast message with a simpler syntax.
+ * Function that show a [Toast] message with a simpler syntax.
  */
 fun Fragment.toast(ms: String, length: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(requireContext(), ms, length).show()
@@ -139,7 +146,7 @@ fun Fragment.toast(ms: String, length: Int = Toast.LENGTH_SHORT) {
 
 /**
  * Extension function that converts this instance of a Location
- * to a LatLng instance.
+ * to a [LatLng] instance.
  *
  * @return The LatLng instance created by this Location.
  */
@@ -157,7 +164,7 @@ fun Any.log(ms: String){
 }
 
 /**
- * Extension function used to show the [DetailsDialog] on the current fragment.
+ * Extension function used to show the [DetailsDialog] on the current [Fragment].
  *
  * @param report    The weather report the dialog is meant for.
  */
@@ -169,7 +176,7 @@ fun <T> Fragment.showDetailsDialog(report: T?) where T: Report, T: Parcelable {
 }
 
 /**
- * Extension function used to show a [NotConnectedDialog] on the current fragment.
+ * Extension function used to show a [NotConnectedDialog] on the current [Fragment].
  */
 fun Fragment.onNotConnected() {
     NotConnectedDialog.newInstance(this)
