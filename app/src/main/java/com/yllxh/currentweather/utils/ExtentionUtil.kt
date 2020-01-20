@@ -19,31 +19,27 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.IllegalStateException
 
+/**
+ * Extension function for the LifecycleOwner class, to allow them to
+ * observe LiveData with a more readable syntax.
+ *
+ * @param liveData          The LiveData which is to be observed.
+ * @param lifecycleOwner    LifecycleOwner which is passed to the LiveData as the LifecycleOwner.
+ * @param block             The block of code to be run each time the LiveData is updated.
+ */
 fun <T> LifecycleOwner.observe(
     liveData: LiveData<T>,
     lifecycleOwner: LifecycleOwner = this,
     block: (T) -> Unit
-){
+) {
     liveData.observe(lifecycleOwner, Observer(block))
 }
 
-
+/**
+ * Function used to reassign the same value to this MutableLiveData.
+ */
 fun <T> MutableLiveData<T>.toSelf() {
     value = value
-}
-
-
-
-fun <T> Fragment.showDetailsDialog(report: T?) where T: Report, T: Parcelable {
-    report?.let {
-        DetailsDialog.newInstance(report)
-            .show(requireFragmentManager(), DetailsDialog.TAG)
-    }
-}
-
-fun MainFragment.onNotConnected() {
-    NotConnectedDialog.newInstance(this)
-        .show(requireFragmentManager(), NotConnectedDialog.TAG)
 }
 
 /**
@@ -100,6 +96,12 @@ fun LiveData<SearchState>.isFailed(): Boolean {
     return value == SearchState.FAILED
 }
 
+/**
+ * Extension function that launches a coroutine with
+ * the Dispatcher.Main as context.
+ *
+ * @param block The block of code which is to be executed.
+ */
 fun ViewModel.onMainContext(block : suspend () -> Unit) {
     viewModelScope.launch {
         withContext(Dispatchers.Main){
@@ -108,6 +110,12 @@ fun ViewModel.onMainContext(block : suspend () -> Unit) {
     }
 }
 
+/**
+ * Extension function that launches a coroutine with
+ * the Dispatcher.IO as context.
+ *
+ * @param block The block of code which is to be executed.
+ */
 fun ViewModel.onIOContext(block : suspend () -> Unit) {
     viewModelScope.launch {
         withContext(Dispatchers.IO){
@@ -122,16 +130,49 @@ fun createAlertDialog(binding: ViewDataBinding): AlertDialog {
         .create()
 }
 
+/**
+ * Function that show a Toast message with a simpler syntax.
+ */
 fun Fragment.toast(ms: String, length: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(requireContext(), ms, length).show()
 }
 
+/**
+ * Extension function that converts this instance of a Location
+ * to a LatLng instance.
+ *
+ * @return The LatLng instance created by this Location.
+ */
 fun Location.toLatLng(): LatLng {
     return LatLng(latitude, longitude)
 }
 
+/**
+ * Log function to show a debug level log.
+ *
+ * @param ms    The message that is to be logged.
+ */
 fun Any.log(ms: String){
     Log.d(this.javaClass.simpleName, " || $ms")
 }
 
+/**
+ * Extension function used to show the [DetailsDialog] on the current fragment.
+ *
+ * @param report    The weather report the dialog is meant for.
+ */
+fun <T> Fragment.showDetailsDialog(report: T?) where T: Report, T: Parcelable {
+    report?.let {
+        DetailsDialog.newInstance(report)
+            .show(requireFragmentManager(), DetailsDialog.TAG)
+    }
+}
+
+/**
+ * Extension function used to show a [NotConnectedDialog] on the current fragment.
+ */
+fun Fragment.onNotConnected() {
+    NotConnectedDialog.newInstance(this)
+        .show(requireFragmentManager(), NotConnectedDialog.TAG)
+}
 
