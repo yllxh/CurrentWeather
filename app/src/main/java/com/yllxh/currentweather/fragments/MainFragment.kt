@@ -88,8 +88,8 @@ class MainFragment : Fragment() {
 
     private fun onSearchStateChanged(state: SearchState) {
         when (state) {
-            SearchState.FAILED -> viewModel.getTodaysWeatherReport()
-            SearchState.MISSING_LOCATION_PERMISSION -> toast(getString(R.string.location_permission_denied))
+            SearchState.SEARCHING -> viewModel.onSearchStateSearching()
+            SearchState.SUCCEEDED -> viewModel.onSearchStateSucceeded()
             else -> return
         }
     }

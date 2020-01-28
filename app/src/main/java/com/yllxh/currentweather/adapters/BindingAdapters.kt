@@ -1,5 +1,6 @@
 package com.yllxh.currentweather.adapters
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -36,6 +37,15 @@ fun RecyclerView.setWeekReportData(weekReport: WeekReport?) {
                         + " not supported by binding adapter."
             )
         }
+    }
+}
+
+@BindingAdapter("visibility")
+fun View.setViewVisibility(showView: Boolean) {
+    visibility = if (showView){
+        View.VISIBLE
+    } else {
+        View.GONE
     }
 }
 

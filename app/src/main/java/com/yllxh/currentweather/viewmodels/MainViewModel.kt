@@ -14,8 +14,8 @@ import com.yllxh.currentweather.data.reports.WeekReport
 import com.yllxh.currentweather.utils.*
 import retrofit2.HttpException
 
-const val USE_LOCATION = 0
-const val USE_CITY_NAME = 1
+private const val USE_LOCATION = 0
+private const val USE_CITY_NAME = 1
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
 
@@ -38,6 +38,9 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     private val _searchState = MutableLiveData<SearchState>()
     val searchState: LiveData<SearchState> get() = _searchState
+
+    private val _isSearching = MutableLiveData<Boolean>()
+    val isSearching: LiveData<Boolean> get() = _isSearching
 
     private val networkAlerter = NetworkAlerter(getApplication()){ _isConnected.toNew(it) }
 
@@ -114,5 +117,13 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             fetchWeatherData(USE_CITY_NAME, cityName)
             return
         }
+    }
+
+    fun onSearchStateSearching() {
+        _isSearching.toNew(true)
+    }
+
+    fun onSearchStateSucceeded() {
+        _isSearching.toNew(false)
     }
 }
