@@ -35,7 +35,6 @@ class ForecastFragment : Fragment() {
             selectedDay = translateDay(requireContext(), weekReport.dailyReports[0].day)
             this.weekReport = weekReport
         }
-
         return binding.root
     }
 }

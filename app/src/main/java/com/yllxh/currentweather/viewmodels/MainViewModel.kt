@@ -42,8 +42,6 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     private val _isSearching = MutableLiveData<Boolean>()
     val isSearching: LiveData<Boolean> get() = _isSearching
 
-    private val networkAlerter = NetworkAlerter(getApplication()){ _isConnected.toNew(it) }
-
     fun getTodaysWeatherReport() {
         _searchState.toNew(SearchState.SEARCHING)
         when {
@@ -107,11 +105,6 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         _isLocationRequested.to(true)
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        networkAlerter.stopListening()
-    }
-
     fun onSearchCityDismissed(cityName: String) {
         if (cityName.isNotBlank()) {
             fetchWeatherData(USE_CITY_NAME, cityName)
@@ -126,4 +119,9 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     fun onSearchStateSucceeded() {
         _isSearching.toNew(false)
     }
+
+    fun setConnected(isConnected: Boolean) {
+        _isConnected.toNew(isConnected)
+    }
+
 }

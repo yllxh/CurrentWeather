@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.yllxh.currentweather.viewmodels.MainViewModel
 import com.yllxh.currentweather.dialogs.NotConnectedDialog
-import com.yllxh.currentweather.R
 import com.yllxh.currentweather.adapters.NextHoursReportAdapter
 import com.yllxh.currentweather.databinding.FragmentMainBinding
 import com.yllxh.currentweather.dialogs.SearchCityDialog
@@ -25,6 +24,11 @@ class MainFragment : Fragment() {
     private lateinit var binding: FragmentMainBinding
     private val viewModel by lazy {
         ViewModelProviders.of(this).get(MainViewModel::class.java)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        NetworkAlerter(requireActivity()){ viewModel.setConnected(it)}
     }
 
     override fun onCreateView(
