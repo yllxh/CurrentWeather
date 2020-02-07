@@ -26,6 +26,7 @@
             android:layout_gravity="center"
             android:background="@color/card_background_color"
             app:visibility="@{viewModel.isSearching()}"
+            tools:visibility="invisible"
             />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +35,8 @@
             android:background="@android:color/transparent"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            app:visibility="@{!viewModel.isSearching()}">
+            app:visibility="@{!viewModel.isSearching()}"
+            >
 
             <TextView
                 android:id="@+id/place_name"
